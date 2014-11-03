@@ -1,16 +1,56 @@
-set ruler
-set cursorline
+
 "set number
 call pathogen#infect()
+
+ "{{{NERDTree
+
+ "Start NERDTree for current file
+autocmd VimEnter * if &filetype !=# 'gitcommit' | NERDTree | endif
+
+"Focuses on file when a new buffer is created- NOT WORKING
+autocmd BufNew * wincmd l
+
+"Activate std_in
+autocmd StdinReadPre * let s:std_in=1
+"Activate NERDTree for no file
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Switches between NERDTree Buffer and File Buffer
+map gt <C-w>w
+
+map tt :NERDTreeTabsToggle
+
+let g:nerdtree_tabs_open_on_console_startup=1
+let g:nerdtree_tabs_open_on_gui_startup=1
+
+autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
+
+" Close all open buffers on entering a window if the only
+" buffer that's left is the NERDTree buffer
+function! s:CloseIfOnlyNerdTreeLeft()
+  if exists("t:NERDTreeBufName")
+    if bufwinnr(t:NERDTreeBufName) != -1
+      if winnr("$") == 1
+        q
+      endif
+    endif
+  endif
+endfunction
+
+"}}}
 
 "{{{Auto Commands
 
 " Automatically cd into the directory that the file is in
 autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 
+" If python than set tabs to 4
+autocmd FileType python set sw=4
+autocmd FileType python set ts=4
+autocmd FileType python set sts=4
+
 " Remove any trailing whitespace that is in the file
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
-
 " Restore cursor position to where it was before
 augroup JumpCursorOnEdit
    au!
@@ -37,8 +77,52 @@ augroup JumpCursorOnEdit
             \ endif
 augroup END
 
-"}}}
 
+" }}}
+
+"{{{Django
+
+let g:django_projects = '~/mrv-env/mrv' "Sets all projects under project
+
+let g:django_activate_virtualenv = 1 "Try to activate the associated virtualenv
+let g:django_activate_nerdtree = 1 "Try to open nerdtree at the project root.
+
+let g:last_relative_dir = ''
+nnoremap \1 :call RelatedFile ("models.py")<cr>
+nnoremap \2 :call RelatedFile ("views.py")<cr>
+nnoremap \3 :call RelatedFile ("urls.py")<cr>
+nnoremap \4 :call RelatedFile ("admin.py")<cr>
+nnoremap \5 :call RelatedFile ("tests.py")<cr>
+nnoremap \6 :call RelatedFile ( "templates/" )<cr>
+nnoremap \7 :call RelatedFile ( "templatetags/" )<cr>
+nnoremap \8 :call RelatedFile ( "management/" )<cr>
+nnoremap \0 :e settings.py<cr>
+nnoremap \9 :e urls.py<cr>
+
+fun! RelatedFile(file)
+    #This is to check that the directory looks djangoish
+    if filereadable(expand("%:h"). '/models.py') || isdirectory(expand("%:h") . "/templatetags/")
+        exec "edit %:h/" . a:file
+        let g:last_relative_dir = expand("%:h") . '/'
+        return ''
+    endif
+    if g:last_relative_dir != ''
+        exec "edit " . g:last_relative_dir . a:file
+        return ''
+    endif
+    echo "Cant determine where relative file is : " . a:file
+    return ''
+endfun
+
+fun SetAppDir()
+    if filereadable(expand("%:h"). '/models.py') || isdirectory(expand("%:h") . "/templatetags/")
+        let g:last_relative_dir = expand("%:h") . '/'
+        return ''
+    endif
+endfun
+autocmd BufEnter *.py call SetAppDir()
+
+"}}}
 "{{{Misc Settings
 
 " Necesary  for lots of cool vim things
@@ -52,9 +136,15 @@ set foldmethod=marker
 
 " Needed for Syntax Highlighting and stuff
 filetype on
+" Detects which syntax highlighting we should use
 filetype plugin indent on
 syntax enable
 set grepprg=grep\ -nH\ $*
+
+set colorcolumn=80
+
+set ruler
+set cursorline
 
 " Who doesn't like autoindent?
 set autoindent
@@ -122,6 +212,8 @@ highlight MatchParen ctermbg=4
 syntax enable
 syntax on
 
+let python_highlight_all = 1
+
 " Favorite Color Scheme
 if has("gui_running")
    " Remove Toolbar
@@ -136,6 +228,10 @@ colorscheme solarized
 "Status line gnarliness
 set laststatus=2
 set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
+
+if $COLORTERM == 'gnome-terminal'
+  set t_Co=256
+endif
 
 " }}}
 
@@ -185,6 +281,19 @@ endfunction
 
 "{{{ Mappings
 
+" General Mapping Format
+"{cmd} {attr} {lhs} {rhs}
+"where
+"{cmd}  is one of ':map', ':map!', ':nmap', ':vmap', ':imap',
+"       ':cmap', ':smap', ':xmap', ':omap', ':lmap', etc.
+"{attr} is optional and one or more of the following: <buffer>, <silent>,
+"       <expr> <script>, <unique> and <special>.
+"       More than one attribute can be specified to a map.
+"{lhs}  left hand side, is a sequence of one or more keys that you will use
+"       in your new shortcut.
+"{rhs}  right hand side, is the sequence of keys that the {lhs} shortcut keys
+"       will execute when entered.
+
 " Open Url on this line with the browser \w
 map <Leader>w :call Browser ()<CR>
 
@@ -200,22 +309,24 @@ nnoremap <silent> <Leader>todo :execute TodoListMode()<CR>
 " Open the TagList Plugin <F3>
 nnoremap <silent> <F3> :Tlist<CR>
 
-" Next Tab
+" Next Tab - Control ->
 nnoremap <silent> <C-Right> :tabnext<CR>
 
-" Previous Tab
+" Previous Tab - Control <-
 nnoremap <silent> <C-Left> :tabprevious<CR>
 
-" New Tab
+" New Tab - Control t
 nnoremap <silent> <C-t> :tabnew<CR>
 
+" Switch buffers
+
 " Rotate Color Scheme <F8>
-nnoremap <silent> <F8> :execute RotateColorTheme()<CR>
+" nnoremap <silent> <F8> :execute RotateColorTheme()<CR>
 
 " DOS is for fools.
 nnoremap <silent> <F9> :%s/$//g<CR>:%s// /g<CR>
 
-" Paste Mode!  Dang! <F10>
+" Toggle paste with <F10>
 nnoremap <silent> <F10> :call Paste_on_off()<CR>
 set pastetoggle=<F10>
 
@@ -239,7 +350,7 @@ nnoremap <silent> <End> a <Esc>r
 nnoremap <silent> zj o<Esc>
 nnoremap <silent> zk O<Esc>
 
-" Space will toggle folds!
+" Collapse (hide text beneath headings) - space bar
 nnoremap <space> za
 
 " Search mappings: These will make it so that going to the next one in a
@@ -261,7 +372,8 @@ nnoremap : ;
 " Fix email paragraphs
 nnoremap <leader>par :%s/^>$//<CR>
 
-"ly$O#{{{ "lpjjj_%A#}}}jjzajj
+" Binds NERDTreeToggle to Ctrl E in Insert Mode Only
+nnoremap <C-e> :NERDTreeToggle<CR>
 
 "}}}
 
@@ -277,5 +389,4 @@ let g:rct_completion_use_fri = 1
 "let g:Tex_DefaultTargetFormat = "pdf"
 let g:Tex_ViewRule_pdf = "kpdf"
 
-filetype plugin indent on
 
