@@ -38,17 +38,14 @@ function! s:CloseIfOnlyNerdTreeLeft()
   endif
 endfunction
 
+let g:gitgutter_max_signs = 1000  " default value
+
 "}}}
 
 "{{{Auto Commands
 
 " Automatically cd into the directory that the file is in
 autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
-
-" If python than set tabs to 4
-autocmd FileType python set sw=4
-autocmd FileType python set ts=4
-autocmd FileType python set sts=4
 
 " Remove any trailing whitespace that is in the file
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
@@ -124,6 +121,7 @@ endfun
 autocmd BufEnter *.py call SetAppDir()
 
 "}}}
+
 
 "{{{Misc Settings
 
@@ -208,11 +206,22 @@ set nohidden
 highlight MatchParen ctermbg=4
 " }}}
 
+"{{{ Python
+
+let python_highlight_all = 1
+
+" If filetype = python than set tabs to 4
+autocmd FileType python set sw=4
+autocmd FileType python set ts=4
+autocmd FileType python set sts=4
+
+
+" }}}
+"
 "{{{Look and Feel
 
 syntax enable
-
-let python_highlight_all = 1
+filetype indent plugin on
 
 " Favorite Color Scheme
 if has("gui_running")
