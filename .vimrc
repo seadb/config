@@ -80,7 +80,7 @@ augroup END
 
 "{{{Django
 
-let g:django_projects = '~/mrv-env/mrv' "Sets all projects under project
+"let g:django_projects = '~/mrv-env/mrv' "Sets all projects under project
 
 let g:django_activate_virtualenv = 1 "Try to activate the associated virtualenv
 let g:django_activate_nerdtree = 1 "Try to open nerdtree at the project root.
