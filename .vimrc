@@ -5,9 +5,10 @@ call pathogen#infect()
  "{{{NERDTree
 
  "Start NERDTree for current file
-autocmd VimEnter * if &filetype !=# 'gitcommit' | NERDTree | endif
+autocmd vimenter * NERDTree
+ "autocmd VimEnter * if &filetype !=# 'gitcommit' | NERDTree | endif
 
-"Focuses on file when a new buffer is created- NOT WORKING
+ "Focuses on file when a new buffer is created- NOT WORKING
 autocmd BufNew * wincmd l
 
 "Activate std_in
@@ -37,17 +38,14 @@ function! s:CloseIfOnlyNerdTreeLeft()
   endif
 endfunction
 
+let g:gitgutter_max_signs = 1000  " default value
+
 "}}}
 
 "{{{Auto Commands
 
 " Automatically cd into the directory that the file is in
 autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
-
-" If python than set tabs to 4
-autocmd FileType python set sw=4
-autocmd FileType python set ts=4
-autocmd FileType python set sts=4
 
 " Remove any trailing whitespace that is in the file
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
@@ -82,7 +80,7 @@ augroup END
 
 "{{{Django
 
-let g:django_projects = '~/mrv-env/mrv' "Sets all projects under project
+"let g:django_projects = '~/mrv-env/mrv' "Sets all projects under project
 
 let g:django_activate_virtualenv = 1 "Try to activate the associated virtualenv
 let g:django_activate_nerdtree = 1 "Try to open nerdtree at the project root.
@@ -123,6 +121,8 @@ endfun
 autocmd BufEnter *.py call SetAppDir()
 
 "}}}
+
+
 "{{{Misc Settings
 
 " Necesary  for lots of cool vim things
@@ -138,7 +138,6 @@ set foldmethod=marker
 filetype on
 " Detects which syntax highlighting we should use
 filetype plugin indent on
-syntax enable
 set grepprg=grep\ -nH\ $*
 
 set colorcolumn=80
@@ -207,12 +206,22 @@ set nohidden
 highlight MatchParen ctermbg=4
 " }}}
 
+"{{{ Python
+
+let python_highlight_all = 1
+
+" If filetype = python than set tabs to 4
+autocmd FileType python set sw=4
+autocmd FileType python set ts=4
+autocmd FileType python set sts=4
+
+
+" }}}
+"
 "{{{Look and Feel
 
 syntax enable
-syntax on
-
-let python_highlight_all = 1
+filetype indent plugin on
 
 " Favorite Color Scheme
 if has("gui_running")
@@ -233,6 +242,8 @@ if $COLORTERM == 'gnome-terminal'
   set t_Co=256
 endif
 
+" status bar
+let g:airline#extensions#tabline#enabled = 1
 " }}}
 
 "{{{ Functions
@@ -293,15 +304,17 @@ endfunction
 "       in your new shortcut.
 "{rhs}  right hand side, is the sequence of keys that the {lhs} shortcut keys
 "       will execute when entered.
+" tesdtdd
+" " Ctrl S to save
+nnoremap <silent> <C-s> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR>
+nmap <C-s> ;w<CR>
+vmap <C-s> <Esc><C-s><CR>gv
+imap <C-s> <Esc><C-s><CR>
 
+" comment
 " Open Url on this line with the browser \w
 map <Leader>w :call Browser ()<CR>
 
-" Open the Project Plugin <F2>
-nnoremap <silent> <F2> :Project<CR>
-
-" Open the Project Plugin
-nnoremap <silent> <Leader>pal  :Project .vimproject<CR>
 
 " TODO Mode
 nnoremap <silent> <Leader>todo :execute TodoListMode()<CR>
@@ -317,11 +330,6 @@ nnoremap <silent> <C-Left> :tabprevious<CR>
 
 " New Tab - Control t
 nnoremap <silent> <C-t> :tabnew<CR>
-
-" Switch buffers
-
-" Rotate Color Scheme <F8>
-" nnoremap <silent> <F8> :execute RotateColorTheme()<CR>
 
 " DOS is for fools.
 nnoremap <silent> <F9> :%s/$//g<CR>:%s// /g<CR>
@@ -361,9 +369,6 @@ map n nzz
 " Testing
 set completeopt=longest,menuone,preview
 
-inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<c-g>u\<cr>"
-inoremap <expr> <c-n> pumvisible() ? "\<lt>c-n>" : "\<lt>c-n>\<lt>c-r>=pumvisible() ? \"\\<lt>down>\" : \"\"\<lt>cr>"
-inoremap <expr> <m-;> pumvisible() ? "\<lt>c-n>" : "\<lt>c-x>\<lt>c-o>\<lt>c-n>\<lt>c-p>\<lt>c-r>=pumvisible() ? \"\\<lt>down>\" : \"\"\<lt>cr>"
 
 " Swap ; and :  Convenient.
 nnoremap ; :
@@ -375,6 +380,7 @@ nnoremap <leader>par :%s/^>$//<CR>
 " Binds NERDTreeToggle to Ctrl E in Insert Mode Only
 nnoremap <C-e> :NERDTreeToggle<CR>
 
+" Comment
 "}}}
 
 "{{{Taglist configuration
