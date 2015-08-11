@@ -549,4 +549,11 @@ if version >= 508 || !exists("did_python_syn_inits")
   delcommand HiLink
 endif
 
+let python_highlight_all = 1
+
+" If filetype = python than set tabs to 4
+autocmd FileType python set sw=4
+autocmd FileType python set ts=4
+autocmd FileType python set sts=4
+
 let b:current_syntax = "python"

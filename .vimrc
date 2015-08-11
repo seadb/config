@@ -2,45 +2,45 @@
 "set number
 call pathogen#infect()
 
- "{{{NERDTree
-
- "Start NERDTree for current file
-autocmd vimenter * NERDTree
- "autocmd VimEnter * if &filetype !=# 'gitcommit' | NERDTree | endif
-
- "Focuses on file when a new buffer is created- NOT WORKING
-autocmd BufNew * wincmd l
-
-"Activate std_in
-autocmd StdinReadPre * let s:std_in=1
-"Activate NERDTree for no file
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" Switches between NERDTree Buffer and File Buffer
-map gt <C-w>w
-
-map tt :NERDTreeTabsToggle
-
-let g:nerdtree_tabs_open_on_console_startup=1
-let g:nerdtree_tabs_open_on_gui_startup=1
-
-autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
-
-" Close all open buffers on entering a window if the only
-" buffer that's left is the NERDTree buffer
-function! s:CloseIfOnlyNerdTreeLeft()
-  if exists("t:NERDTreeBufName")
-    if bufwinnr(t:NERDTreeBufName) != -1
-      if winnr("$") == 1
-        q
-      endif
-    endif
-  endif
-endfunction
-
-let g:gitgutter_max_signs = 1000  " default value
-
-"}}}
+" "{{{NERDTree
+"
+" "Start NERDTree for current file
+"autocmd vimenter * NERDTree
+" "autocmd VimEnter * if &filetype !=# 'gitcommit' | NERDTree | endif
+"
+" "Focuses on file when a new buffer is created- NOT WORKING
+"autocmd BufNew * wincmd l
+"
+""Activate std_in
+"autocmd StdinReadPre * let s:std_in=1
+""Activate NERDTree for no file
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"
+"" Switches between NERDTree Buffer and File Buffer
+"map gt <C-w>w
+"
+"map tt :NERDTreeTabsToggle
+"
+"let g:nerdtree_tabs_open_on_console_startup=1
+"let g:nerdtree_tabs_open_on_gui_startup=1
+"
+"autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
+"
+"" Close all open buffers on entering a window if the only
+"" buffer that's left is the NERDTree buffer
+"function! s:CloseIfOnlyNerdTreeLeft()
+"  if exists("t:NERDTreeBufName")
+"    if bufwinnr(t:NERDTreeBufName) != -1
+"      if winnr("$") == 1
+"        q
+"      endif
+"    endif
+"  endif
+"endfunction
+"
+"let g:gitgutter_max_signs = 1000  " default value
+"
+""}}}
 
 "{{{Auto Commands
 
@@ -49,38 +49,12 @@ autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 
 " Remove any trailing whitespace that is in the file
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
-" Restore cursor position to where it was before
-augroup JumpCursorOnEdit
-   au!
-   autocmd BufReadPost *
-            \ if expand("<afile>:p:h") !=? $TEMP |
-            \   if line("'\"") > 1 && line("'\"") <= line("$") |
-            \     let JumpCursorOnEdit_foo = line("'\"") |
-            \     let b:doopenfold = 1 |
-            \     if (foldlevel(JumpCursorOnEdit_foo) > foldlevel(JumpCursorOnEdit_foo - 1)) |
-            \        let JumpCursorOnEdit_foo = JumpCursorOnEdit_foo - 1 |
-            \        let b:doopenfold = 2 |
-            \     endif |
-            \     exe JumpCursorOnEdit_foo |
-            \   endif |
-            \ endif
-   " Need to postpone using "zv" until after reading the modelines.
-   autocmd BufWinEnter *
-            \ if exists("b:doopenfold") |
-            \   exe "normal zv" |
-            \   if(b:doopenfold > 1) |
-            \       exe  "+".1 |
-            \   endif |
-            \   unlet b:doopenfold |
-            \ endif
-augroup END
-
 
 " }}}
 
 "{{{Django
 
-"let g:django_projects = '~/mrv-env/mrv' "Sets all projects under project
+let g:django_projects = '~/' "Sets all projects under project
 
 let g:django_activate_virtualenv = 1 "Try to activate the associated virtualenv
 let g:django_activate_nerdtree = 1 "Try to open nerdtree at the project root.
@@ -120,8 +94,7 @@ fun SetAppDir()
 endfun
 autocmd BufEnter *.py call SetAppDir()
 
-"}}}
-
+}}}
 
 "{{{Misc Settings
 
@@ -136,18 +109,18 @@ set foldmethod=marker
 
 " Needed for Syntax Highlighting and stuff
 filetype on
+
 " Detects which syntax highlighting we should use
 filetype plugin indent on
-set grepprg=grep\ -nH\ $*
 
+" creates a line at character 80
 set colorcolumn=80
-
 set ruler
 set cursorline
 
 " Who doesn't like autoindent?
 set autoindent
-set smartindent
+"set smartindent
 
 " Spaces are better than a tab character
 set expandtab
@@ -188,16 +161,11 @@ set smartcase
 " This is totally awesome - remap jj to escape in insert mode.  You'll never type jj anyway, so it's great!
 inoremap jj <Esc>
 
-nnoremap JJJJ <Nop>
-
 " Incremental searching is sexy
 set incsearch
 
 " Highlight things that we find with the search
 set hlsearch
-
-" Since I use linux, I want this
-let g:clipbrdDefaultReg = '+'
 
 " When I close a tab, remove the buffer
 set nohidden
@@ -206,22 +174,9 @@ set nohidden
 highlight MatchParen ctermbg=4
 " }}}
 
-"{{{ Python
-
-let python_highlight_all = 1
-
-" If filetype = python than set tabs to 4
-autocmd FileType python set sw=4
-autocmd FileType python set ts=4
-autocmd FileType python set sts=4
-
-
-" }}}
-"
 "{{{Look and Feel
 
-syntax enable
-filetype indent plugin on
+syntax on
 
 " Favorite Color Scheme
 if has("gui_running")
@@ -231,16 +186,23 @@ if has("gui_running")
    set guifont=Terminus\ 9
 endif
 
-let g:solarized_termtrans = 1
+if $COLORTERM == 'gnome-terminal'
+  "set t_Co=256
+endif
+
+if has("gui_running")
+  colorscheme busybee
+elseif &t_Co == 256
+  colorscheme busybee
+endif
+
+"let g:solarized_termtrans = 1
 set background=dark
-colorscheme solarized
 "Status line gnarliness
 set laststatus=2
 set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 
-if $COLORTERM == 'gnome-terminal'
-  set t_Co=256
-endif
+set tabstop=2 shiftwidth=2 softtabstop=2 noexpandtab
 
 " status bar
 let g:airline#extensions#tabline#enabled = 1
@@ -258,7 +220,6 @@ endfunction
 
 "}}}
 
-
 "{{{ Paste Toggle
 let paste_mode = 0 " 0 = normal, 1 = paste
 
@@ -272,20 +233,6 @@ func! Paste_on_off()
    endif
    return
 endfunc
-"}}}
-
-"{{{ Todo List Mode
-
-function! TodoListMode()
-   e ~/.todo.otl
-   Calendar
-   wincmd l
-   set foldlevel=1
-   tabnew ~/.notes.txt
-   tabfirst
-   " or 'norm! zMzr'
-endfunction
-
 "}}}
 
 "}}}
@@ -304,23 +251,13 @@ endfunction
 "       in your new shortcut.
 "{rhs}  right hand side, is the sequence of keys that the {lhs} shortcut keys
 "       will execute when entered.
-" tesdtdd
-" " Ctrl S to save
-nnoremap <silent> <C-s> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR>
-nmap <C-s> ;w<CR>
-vmap <C-s> <Esc><C-s><CR>gv
-imap <C-s> <Esc><C-s><CR>
-
-" comment
-" Open Url on this line with the browser \w
-map <Leader>w :call Browser ()<CR>
 
 
-" TODO Mode
-nnoremap <silent> <Leader>todo :execute TodoListMode()<CR>
-
-" Open the TagList Plugin <F3>
-nnoremap <silent> <F3> :Tlist<CR>
+" Ctrl S to save
+ nnoremap <silent> <C-s> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR>
+ nmap <C-s> ;w<CR>
+ vmap <C-s> <Esc><C-s><CR>gv
+ imap <C-s> <Esc><C-s><CR>
 
 " Next Tab - Control ->
 nnoremap <silent> <C-Right> :tabnext<CR>
@@ -338,21 +275,11 @@ nnoremap <silent> <F9> :%s/$//g<CR>:%s// /g<CR>
 nnoremap <silent> <F10> :call Paste_on_off()<CR>
 set pastetoggle=<F10>
 
-" Edit vimrc \ev
-nnoremap <silent> <Leader>ev :tabnew<CR>:e ~/.vimrc<CR>
-
-" Edit gvimrc \gv
-nnoremap <silent> <Leader>gv :tabnew<CR>:e ~/.gvimrc<CR>
-
 " Up and down are more logical with g..
 nnoremap <silent> k gk
 nnoremap <silent> j gj
 inoremap <silent> <Up> <Esc>gka
 inoremap <silent> <Down> <Esc>gja
-
-" Good call Benjie (r for i)
-nnoremap <silent> <Home> i <Esc>r
-nnoremap <silent> <End> a <Esc>r
 
 " Create Blank Newlines and stay in Normal mode
 nnoremap <silent> zj o<Esc>
@@ -369,6 +296,8 @@ map n nzz
 " Testing
 set completeopt=longest,menuone,preview
 
+iabbrev </ </<C-X><C-O>
+iabbrev adn and
 
 " Swap ; and :  Convenient.
 nnoremap ; :
@@ -380,19 +309,5 @@ nnoremap <leader>par :%s/^>$//<CR>
 " Binds NERDTreeToggle to Ctrl E in Insert Mode Only
 nnoremap <C-e> :NERDTreeToggle<CR>
 
-" Comment
 "}}}
-
-"{{{Taglist configuration
-let Tlist_Use_Right_Window = 1
-let Tlist_Enable_Fold_Column = 0
-let Tlist_Exit_OnlyWindow = 1
-let Tlist_Use_SingleClick = 1
-let Tlist_Inc_Winwidth = 0
-"}}}
-
-let g:rct_completion_use_fri = 1
-"let g:Tex_DefaultTargetFormat = "pdf"
-let g:Tex_ViewRule_pdf = "kpdf"
-
 
