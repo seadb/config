@@ -1,103 +1,20 @@
 
-"set number
+"{{{ Windows/gVim
+if has('win32') || has('win64')
+	set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+endif
+
+if has('gui_running')
+	set guifont=Menlo:h8
+endif
+
+cd ~\
+"}}}
+
 call pathogen#infect()
 
-" "{{{NERDTree
-"
-" "Start NERDTree for current file
-"autocmd vimenter * NERDTree
-" "autocmd VimEnter * if &filetype !=# 'gitcommit' | NERDTree | endif
-"
-" "Focuses on file when a new buffer is created- NOT WORKING
-"autocmd BufNew * wincmd l
-"
-""Activate std_in
-"autocmd StdinReadPre * let s:std_in=1
-""Activate NERDTree for no file
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-"
-"" Switches between NERDTree Buffer and File Buffer
-"map gt <C-w>w
-"
-"map tt :NERDTreeTabsToggle
-"
-"let g:nerdtree_tabs_open_on_console_startup=1
-"let g:nerdtree_tabs_open_on_gui_startup=1
-"
-"autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
-"
-"" Close all open buffers on entering a window if the only
-"" buffer that's left is the NERDTree buffer
-"function! s:CloseIfOnlyNerdTreeLeft()
-"  if exists("t:NERDTreeBufName")
-"    if bufwinnr(t:NERDTreeBufName) != -1
-"      if winnr("$") == 1
-"        q
-"      endif
-"    endif
-"  endif
-"endfunction
-"
-"let g:gitgutter_max_signs = 1000  " default value
-"
-""}}}
 
-"{{{Auto Commands
-
-" Automatically cd into the directory that the file is in
-autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
-
-" Remove any trailing whitespace that is in the file
-autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
-
-" }}}
-
-"{{{Django
-
-let g:django_projects = '~/' "Sets all projects under project
-
-let g:django_activate_virtualenv = 1 "Try to activate the associated virtualenv
-let g:django_activate_nerdtree = 1 "Try to open nerdtree at the project root.
-
-let g:last_relative_dir = ''
-nnoremap \1 :call RelatedFile ("models.py")<cr>
-nnoremap \2 :call RelatedFile ("views.py")<cr>
-nnoremap \3 :call RelatedFile ("urls.py")<cr>
-nnoremap \4 :call RelatedFile ("admin.py")<cr>
-nnoremap \5 :call RelatedFile ("tests.py")<cr>
-nnoremap \6 :call RelatedFile ( "templates/" )<cr>
-nnoremap \7 :call RelatedFile ( "templatetags/" )<cr>
-nnoremap \8 :call RelatedFile ( "management/" )<cr>
-nnoremap \0 :e settings.py<cr>
-nnoremap \9 :e urls.py<cr>
-
-fun! RelatedFile(file)
-    #This is to check that the directory looks djangoish
-    if filereadable(expand("%:h"). '/models.py') || isdirectory(expand("%:h") . "/templatetags/")
-        exec "edit %:h/" . a:file
-        let g:last_relative_dir = expand("%:h") . '/'
-        return ''
-    endif
-    if g:last_relative_dir != ''
-        exec "edit " . g:last_relative_dir . a:file
-        return ''
-    endif
-    echo "Cant determine where relative file is : " . a:file
-    return ''
-endfun
-
-fun SetAppDir()
-    if filereadable(expand("%:h"). '/models.py') || isdirectory(expand("%:h") . "/templatetags/")
-        let g:last_relative_dir = expand("%:h") . '/'
-        return ''
-    endif
-endfun
-autocmd BufEnter *.py call SetAppDir()
-
-}}}
-
-"{{{Misc Settings
-
+"{{{Look and Feel
 " Necesary  for lots of cool vim things
 set nocompatible
 
@@ -120,15 +37,16 @@ set cursorline
 
 " Who doesn't like autoindent?
 set autoindent
-"set smartindent
+set smartindent
 
 " Spaces are better than a tab character
-set expandtab
+set noexpandtab
 set smarttab
 
 " Who wants an 8 character tab?  Not me!
 set shiftwidth=2
 set softtabstop=2
+set tabstop=2 
 
 " Use english for spellchecking, but don't spellcheck by default
 if version >= 700
@@ -172,23 +90,8 @@ set nohidden
 
 " Set off the other paren
 highlight MatchParen ctermbg=4
-" }}}
-
-"{{{Look and Feel
 
 syntax on
-
-" Favorite Color Scheme
-if has("gui_running")
-   " Remove Toolbar
-   set guioptions-=T
-   "Terminus is AWESOME
-   set guifont=Terminus\ 9
-endif
-
-if $COLORTERM == 'gnome-terminal'
-  "set t_Co=256
-endif
 
 if has("gui_running")
   colorscheme busybee
@@ -196,13 +99,12 @@ elseif &t_Co == 256
   colorscheme busybee
 endif
 
-"let g:solarized_termtrans = 1
 set background=dark
 "Status line gnarliness
 set laststatus=2
 set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 
-set tabstop=2 shiftwidth=2 softtabstop=2 noexpandtab
+
 
 " status bar
 let g:airline#extensions#tabline#enabled = 1
@@ -210,7 +112,7 @@ let g:airline#extensions#tabline#enabled = 1
 
 "{{{ Functions
 
-"{{{ Open URL in browser
+" Open URL in browser
 
 function! Browser ()
    let line = getline (".")
@@ -218,9 +120,8 @@ function! Browser ()
    exec "!konqueror ".line
 endfunction
 
-"}}}
 
-"{{{ Paste Toggle
+" Paste Toggle
 let paste_mode = 0 " 0 = normal, 1 = paste
 
 func! Paste_on_off()
@@ -233,7 +134,6 @@ func! Paste_on_off()
    endif
    return
 endfunc
-"}}}
 
 "}}}
 
@@ -253,11 +153,6 @@ endfunc
 "       will execute when entered.
 
 
-" Ctrl S to save
- nnoremap <silent> <C-s> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR>
- nmap <C-s> ;w<CR>
- vmap <C-s> <Esc><C-s><CR>gv
- imap <C-s> <Esc><C-s><CR>
 
 " Next Tab - Control ->
 nnoremap <silent> <C-Right> :tabnext<CR>
@@ -281,10 +176,6 @@ nnoremap <silent> j gj
 inoremap <silent> <Up> <Esc>gka
 inoremap <silent> <Down> <Esc>gja
 
-" Create Blank Newlines and stay in Normal mode
-nnoremap <silent> zj o<Esc>
-nnoremap <silent> zk O<Esc>
-
 " Collapse (hide text beneath headings) - space bar
 nnoremap <space> za
 
@@ -293,21 +184,14 @@ nnoremap <space> za
 map N Nzz
 map n nzz
 
+
 " Testing
 set completeopt=longest,menuone,preview
 
 iabbrev </ </<C-X><C-O>
 iabbrev adn and
 
-" Swap ; and :  Convenient.
-nnoremap ; :
-nnoremap : ;
 
-" Fix email paragraphs
-nnoremap <leader>par :%s/^>$//<CR>
-
-" Binds NERDTreeToggle to Ctrl E in Insert Mode Only
-nnoremap <C-e> :NERDTreeToggle<CR>
 
 "}}}
 
