@@ -1,10 +1,2 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =8
-let g:netrw_dirhist_1='/user/bridsonc/cse232/Projects'
-let g:netrw_dirhist_2='/user/bridsonc/cse232/Labs'
-let g:netrw_dirhist_3='/user/bridsonc/NetBeansProjects/Step1'
-let g:netrw_dirhist_4='/user/bridsonc/bridsonc-tube/Project2'
-let g:netrw_dirhist_5='/user/bridsonc/cse410/proj1_skeleton'
-let g:netrw_dirhist_6='/user/bridsonc/bridsonc-tube/Project2'
-let g:netrw_dirhist_7='/user/bridsonc/.vim/bundle'
-let g:netrw_dirhist_8='/user/bridsonc/bridsonc-tube/Project3'
+let g:netrw_dirhist_cnt =0
