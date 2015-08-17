@@ -8,11 +8,12 @@ if has('gui_running')
 	set guifont=Menlo:h8
 endif
 
-cd ~\
+map <C-n> :NERDTreeToggle<CR>
+
+cd ~/
 "}}}
 
 call pathogen#infect()
-
 
 "{{{Look and Feel
 " Necesary  for lots of cool vim things
@@ -40,7 +41,7 @@ set autoindent
 set smartindent
 
 " Spaces are better than a tab character
-set noexpandtab
+set expandtab
 set smarttab
 
 " Who wants an 8 character tab?  Not me!
@@ -92,6 +93,8 @@ set nohidden
 highlight MatchParen ctermbg=4
 
 syntax on
+
+colorscheme busybee
 
 if has("gui_running")
   colorscheme busybee
