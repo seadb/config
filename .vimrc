@@ -8,14 +8,13 @@ if has('gui_running')
 	set guifont=Menlo:h8
 endif
 
-map <C-n> :NERDTreeToggle<CR>
 
 cd ~/
 "}}}
 
 call pathogen#infect()
 
-"{{{Look and Feel
+"{{{ Vim Settings
 " Necesary  for lots of cool vim things
 set nocompatible
 
@@ -68,17 +67,11 @@ set mouse=a
 " Got backspace?
 set backspace=2
 
-" Line Numbers PWN!
-set number
-
 " Ignoring case is a fun trick
 set ignorecase
 
 " And so is Artificial Intellegence!
 set smartcase
-
-" This is totally awesome - remap jj to escape in insert mode.  You'll never type jj anyway, so it's great!
-inoremap jj <Esc>
 
 " Incremental searching is sexy
 set incsearch
@@ -92,7 +85,13 @@ set nohidden
 " Set off the other paren
 highlight MatchParen ctermbg=4
 
+"}}}
+
+"{{{Aesthetics
 syntax on
+
+" Line numbers
+set number
 
 colorscheme busybee
 
@@ -107,11 +106,34 @@ set background=dark
 set laststatus=2
 set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 
-
-
 " status bar
 let g:airline#extensions#tabline#enabled = 1
 " }}}
+
+"{{{ Plugin Specific
+
+"""Syntastic"""
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+"""NerdTree"""
+map <C-n> :NERDTreeToggle<CR>
+"}}}
 
 "{{{ Functions
 
@@ -155,13 +177,8 @@ endfunc
 "{rhs}  right hand side, is the sequence of keys that the {lhs} shortcut keys
 "       will execute when entered.
 
-
-
-" Next Tab - Control ->
-nnoremap <silent> <C-Right> :tabnext<CR>
-
-" Previous Tab - Control <-
-nnoremap <silent> <C-Left> :tabprevious<CR>
+" This is totally awesome - remap jj to escape in insert mode.  You'll never type jj anyway, so it's great!
+inoremap jj <Esc>
 
 " New Tab - Control t
 nnoremap <silent> <C-t> :tabnew<CR>
@@ -195,6 +212,14 @@ iabbrev </ </<C-X><C-O>
 iabbrev adn and
 
 
-
 "}}}
 
+"{{{ Auto commands
+
+augroup reload_vimrc " {
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END " }
+
+
+"}}}
