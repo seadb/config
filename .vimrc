@@ -24,17 +24,6 @@ set showcmd
 " Folding Stuffs
 set foldmethod=marker
 
-" Needed for Syntax Highlighting and stuff
-filetype on
-
-" Detects which syntax highlighting we should use
-filetype plugin indent on
-
-" creates a line at character 80
-set colorcolumn=80
-set ruler
-set cursorline
-
 " Who doesn't like autoindent?
 set autoindent
 set smartindent
@@ -88,9 +77,20 @@ highlight MatchParen ctermbg=4
 "}}}
 
 "{{{Aesthetics
+
+" Needed for Syntax Highlighting and stuff
+filetype on
+
+" Syntax highlighting
 syntax on
 
-" Line numbers
+" Detects which syntax highlighting we should use
+filetype plugin indent on
+
+" creates a line at character 80
+set colorcolumn=80
+set ruler
+set cursorline
 set number
 
 colorscheme busybee
@@ -133,6 +133,10 @@ let g:syntastic_check_on_wq = 0
 
 """NerdTree"""
 map <C-n> :NERDTreeToggle<CR>
+
+"""ctrlp"""
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|build'
+
 "}}}
 
 "{{{ Functions
