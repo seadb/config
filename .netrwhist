@@ -1,9 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/home/vagrant/.npm'
-let g:netrw_dirhist_2='/home/vagrant'
-let g:netrw_dirhist_3='/home/vagrant/skills-map/tests'
-let g:netrw_dirhist_4='/home/vagrant/skills-map/src'
-let g:netrw_dirhist_5='/home/vagrant/skills-map/tests'
-let g:netrw_dirhist_6='/home/vagrant/skills-map/build'
-let g:netrw_dirhist_7='/home/vagrant/skills-map/src'
