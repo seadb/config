@@ -14,7 +14,7 @@ cd ~\
 call pathogen#infect()
 
 
-"{{{Look and Feel
+"{{{Basic settings
 " Necesary  for lots of cool vim things
 set nocompatible
 
@@ -24,16 +24,6 @@ set showcmd
 " Folding Stuffs
 set foldmethod=marker
 
-" Needed for Syntax Highlighting and stuff
-filetype on
-
-" Detects which syntax highlighting we should use
-filetype plugin indent on
-
-" creates a line at character 80
-set colorcolumn=80
-set ruler
-set cursorline
 
 " Who doesn't like autoindent?
 set autoindent
@@ -91,7 +81,12 @@ set nohidden
 " Set off the other paren
 highlight MatchParen ctermbg=4
 
+"}}}
+
+"{{{ Look and Feel
 syntax on
+"filetype on
+filetype plugin indent on
 
 if has("gui_running")
   colorscheme busybee
@@ -100,11 +95,12 @@ elseif &t_Co == 256
 endif
 
 set background=dark
-"Status line gnarliness
+set colorcolumn=80
+
 set laststatus=2
 set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
-
-
+set ruler
+set cursorline
 
 " status bar
 let g:airline#extensions#tabline#enabled = 1

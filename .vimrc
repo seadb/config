@@ -1,5 +1,9 @@
 call pathogen#infect()
 
+"{{{ Windows / ConEmu
+
+"}}}
+
 "{{{ Vim Settings
 " Necesary  for lots of cool vim things
 set nocompatible
@@ -105,20 +109,41 @@ let g:airline#extensions#tabline#enabled = 1
 map <C-n> :NERDTreeToggle<CR>
 
 """ctrlp"""
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|build'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\'
+
+"""JSX"""
+let g:jsx_ext_required = 0
 
 "}}}
 
 "{{{ Functions
 
-" Open URL in browser
+"{{{ Open URL in browser
 
 function! Browser ()
    let line = getline (".")
    let line = matchstr (line, "http[^   ]*")
    exec "!konqueror ".line
 endfunction
+"}}}
 
+<<<<<<< HEAD
+=======
+"{{{ Paste Toggle
+let paste_mode = 0 " 0 = normal, 1 = paste
+
+func! Paste_on_off()
+   if g:paste_mode == 0
+      set paste
+      let g:paste_mode = 1
+   else
+      set nopaste
+      let g:paste_mode = 0
+   endif
+   return
+endfunc
+"}}}
+>>>>>>> win
 
 "}}}
 
@@ -164,6 +189,8 @@ nnoremap <space> za
 map N Nzz
 map n nzz
 
+" enter visual block with q in command mode
+:nnoremap q <c-v>
 
 " Testing
 set completeopt=longest,menuone,preview
