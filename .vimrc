@@ -110,6 +110,9 @@ map <C-n> :NERDTreeToggle<CR>
 """ctrlp"""
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\'
 
+"""JSX"""
+let g:jsx_ext_required = 0
+
 "}}}
 
 "{{{ Functions
