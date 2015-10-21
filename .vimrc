@@ -1,18 +1,7 @@
-
-"{{{ Windows/gVim
-if has('win32') || has('win64')
-	set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
-endif
-
-if has('gui_running')
-	set guifont=Menlo:h8
-endif
-
-
-cd ~/
-"}}}
-
 call pathogen#infect()
+
+"{{{ Windows / ConEmu
+"}}}
 
 "{{{ Vim Settings
 " Necesary  for lots of cool vim things
@@ -74,6 +63,9 @@ set nohidden
 " Set off the other paren
 highlight MatchParen ctermbg=4
 
+" set paste toggle
+set pastetoggle=<F10>
+
 "}}}
 
 "{{{Aesthetics
@@ -112,30 +104,11 @@ let g:airline#extensions#tabline#enabled = 1
 
 "{{{ Plugin Specific
 
-"""Syntastic"""
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
 """NerdTree"""
 map <C-n> :NERDTreeToggle<CR>
 
 """ctrlp"""
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|build'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\'
 
 "}}}
 
@@ -149,20 +122,6 @@ function! Browser ()
    exec "!konqueror ".line
 endfunction
 
-
-" Paste Toggle
-let paste_mode = 0 " 0 = normal, 1 = paste
-
-func! Paste_on_off()
-   if g:paste_mode == 0
-      set paste
-      let g:paste_mode = 1
-   else
-      set nopaste
-      let g:paste_mode = 0
-   endif
-   return
-endfunc
 
 "}}}
 
