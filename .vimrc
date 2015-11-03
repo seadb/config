@@ -137,8 +137,6 @@ function! Browser ()
 endfunction
 "}}}
 
-<<<<<<< HEAD
-=======
 "{{{ Paste Toggle
 let paste_mode = 0 " 0 = normal, 1 = paste
 
@@ -153,7 +151,6 @@ func! Paste_on_off()
    return
 endfunc
 "}}}
->>>>>>> win
 
 "}}}
 

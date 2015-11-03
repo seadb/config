@@ -20,6 +20,8 @@
   autoupdate = 1
 [push]
   default = current 
+[pull]
+  default = current
 [color]
   ui = true 
 [color "branch"]
