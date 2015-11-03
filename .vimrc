@@ -8,6 +8,9 @@ call pathogen#infect()
 " Necesary  for lots of cool vim things
 set nocompatible
 
+" only edit file 1 time on save 
+set nowritebackup
+
 " This shows what you are typing as a command.  I love this!
 set showcmd
 
@@ -61,9 +64,6 @@ set hlsearch
 " When I close a tab, remove the buffer
 set nohidden
 
-" Set off the other paren
-highlight MatchParen ctermbg=4
-
 " set paste toggle
 set pastetoggle=<F10>
 
@@ -79,6 +79,10 @@ syntax on
 
 " Detects which syntax highlighting we should use
 filetype plugin indent on
+
+
+" Set off the other paren
+hi MatchParen cterm=underline ctermbg=green ctermfg=blue
 
 " creates a line at character 80
 set colorcolumn=80
@@ -105,24 +109,25 @@ let g:airline#extensions#tabline#enabled = 1
 
 "{{{ Plugin Specific
 
-"""NerdTree"""
+"{{{ NerdTree
 map <C-n> :NERDTreeToggle<CR>
+"}}}
 
-"""ctrlp"""
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\'
+"{{{ ctrlp
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|public/\|build/'
+"}}}
 
-"""JSX"""
-let g:jsx_ext_required = 0
+"{{{ JSX
+"}}}
 
-"""Syntastic"""
+"{{{ Syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
+"}}}
 
 "}}}
 
