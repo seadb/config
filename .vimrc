@@ -5,10 +5,6 @@ call pathogen#infect()
 "}}}
 
 "{{{ Vim Settings
-
-" map <leader> to ,
-let mapleader=","
-
 " Necesary  for lots of cool vim things
 set nocompatible
 
@@ -111,48 +107,14 @@ set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 let g:airline#extensions#tabline#enabled = 1
 " }}}
 
-"{{{ Buffer Tab Hack
-
-" This allows buffers to be hidden if you've modified a buffer.
-" This is almost a must if you wish to use buffers in this way.
-set hidden
-
-" To open a new empty buffer
-" This replaces :tabnew which I used to bind to this mapping
-nmap <leader>T :enew<cr>
-
-" Move to the next buffer
-nmap <leader>l :bnext<CR>
-
-" Move to the previous buffer
-nmap <leader>h :bprevious<CR>
-
-" Close the current buffer and move to the previous one
-" This replicates the idea of closing a tab
-nmap <leader>bq :bp <BAR> bd #<CR>
-
-" Show all open buffers and their status
-nmap <leader>bl :ls<CR>
-
-"}}}
-
 "{{{ Plugin Specific
 
+"{{{ NerdTree
+map <C-n> :NERDTreeToggle<CR>
+"}}}
+
 "{{{ ctrlp
-
-
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|public/|build/)|(\.(swp|ico|git|svn|exe|so|dll|class|png|jpg|jpeg))$'
-
-" Use the nearest .git directory as the cwd
-" This makes a lot of sense if you are working on a project that is in version
-" control. It also supports works with .svn, .hg, .bzr.
-let g:ctrlp_working_path_mode = 'r'
-
-" Easy bindings for its various modes
-nmap <leader>bb :CtrlPBuffer<cr>
-nmap <leader>bm :CtrlPMixed<cr>
-nmap <leader>bs :CtrlPMRU<cr>
-
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|public/\|build/'
 "}}}
 
 "{{{ JSX
@@ -160,21 +122,13 @@ nmap <leader>bs :CtrlPMRU<cr>
 
 "{{{ Syntastic
 set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 "}}}
 
-"{{{ airline
-" Enable the list of buffers
-let g:airline#extensions#tabline#enabled = 1
-
-" Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'
-"}}}
-"
 "}}}
 
 "{{{ Functions
@@ -259,9 +213,7 @@ iabbrev adn and
 
 "}}}
 
-"{{{ .vimrc
-
-map ,v :sp $VIMRC<CR><C-W>
+"{{{ Auto commands
 
 augroup reload_vimrc " {
     autocmd!
