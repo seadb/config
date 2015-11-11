@@ -116,6 +116,7 @@
   psfom = push -f origin master
   psuom = push -u origin master
   dr    = push origin --delete 
+  psup  = push --set-upstream origin
   #############
   pl = pull
   plu = pull -u
