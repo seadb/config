@@ -75,13 +75,15 @@ export COLOR_LIGHT_GRAY='\e[0;37m'
 export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
 export CLICOLOR=1
-#export LSCOLORS=ExFxCxDxBxegedabagacad
+
+# color ls
 alias ls='ls --color'
 LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rpm=90'
 export LS_COLORS
 
-
+# prompt
 PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[0;33m\]\W\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[0;37m\]'
+
 # alias
 
 alias buildf='docker-compose --x-networking -f ~/everything/skills-map/docker-compose-dev.yml up -d --force-recreate'
@@ -94,3 +96,4 @@ alias gbs='gulp build:ui:stylus'
 alias gwu='gulp watch:ui'
 alias gwc='gulp watch:ui:coffee'
 alias gws='gulp watch:ui:stylus'
+
