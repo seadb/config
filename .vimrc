@@ -92,6 +92,9 @@ set number
 
 colorscheme busybee
 
+set t_Co=256
+
+
 if has("gui_running")
   colorscheme busybee
 elseif &t_Co == 256
