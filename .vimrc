@@ -5,6 +5,10 @@ call pathogen#infect()
 "}}}
 
 "{{{ Vim Settings
+
+" map leader to ,
+let mapleader=","
+
 " Necesary  for lots of cool vim things
 set nocompatible
 
@@ -106,18 +110,62 @@ set background=dark
 set laststatus=2
 set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 
-" status bar
-let g:airline#extensions#tabline#enabled = 1
 " }}}
 
 "{{{ Plugin Specific
+
+"{{{ airline
+
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+"}}}
 
 "{{{ NerdTree
 map <C-n> :NERDTreeToggle<CR>
 "}}}
 
-"{{{ ctrlp
+"{{{ CtrlP
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|public/\|build/'
+
+" Use the nearest .git directory as the cwd
+let g:ctrlp_working_path_mode = 'r'
+
+" Use a leader instead of the actual named binding
+nmap <leader>p :CtrlP<cr>
+
+" Easy bindings for its various modes
+nmap <leader>bb :CtrlPBuffer<cr>
+nmap <leader>bm :CtrlPMixed<cr>
+nmap <leader>bs :CtrlPMRU<cr>
+
+"}}}
+
+"{{{ Buffergator
+
+" Use the right side of the screen
+let g:buffergator_viewport_split_policy = 'R'
+
+" I want my own keymappings...
+let g:buffergator_suppress_keymaps = 1
+
+" Looper buffers
+"let g:buffergator_mru_cycle_loop = 1
+
+" Go to the previous buffer open
+nmap <leader>jj :BuffergatorMruCyclePrev<cr>
+
+" Go to the next buffer open
+nmap <leader>kk :BuffergatorMruCycleNext<cr>
+
+" View the entire list of buffers open
+nmap <leader>bl :BuffergatorOpen<cr>
+
+" Shared bindings from Solution #1 from earlier
+nmap <leader>T :enew<cr>
+nmap <leader>bq :bp <BAR> bd #<cr>
 "}}}
 
 "{{{ JSX
