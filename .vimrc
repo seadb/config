@@ -1,7 +1,6 @@
 call pathogen#infect()
 
-"{{{ Windows / ConEmu
-
+"{{{ SSH
 "}}}
 
 "{{{ Vim Settings
@@ -66,7 +65,7 @@ set incsearch
 set hlsearch
 
 " When I close a tab, remove the buffer
-set nohidden
+set hidden
 
 " set paste toggle
 set pastetoggle=<F10>
@@ -94,18 +93,16 @@ set ruler
 set cursorline
 set number
 
-colorscheme busybee
-
-set t_Co=256
-
-
-if has("gui_running")
-  colorscheme busybee
-elseif &t_Co == 256
-  colorscheme busybee
+if !has("gui_running")
+    set t_Co=256
+    set term=xterm-256color
 endif
 
+set t_Co=256
+set term=xterm-256color
+colorscheme busybee
 set background=dark
+
 "Status line gnarliness
 set laststatus=2
 set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
@@ -116,11 +113,6 @@ set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 
 "{{{ airline
 
-" Enable the list of buffers
-let g:airline#extensions#tabline#enabled = 1
-
-" Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'
 "}}}
 
 "{{{ NerdTree
@@ -162,10 +154,6 @@ nmap <leader>kk :BuffergatorMruCycleNext<cr>
 
 " View the entire list of buffers open
 nmap <leader>bl :BuffergatorOpen<cr>
-
-" Shared bindings from Solution #1 from earlier
-nmap <leader>T :enew<cr>
-nmap <leader>bq :bp <BAR> bd #<cr>
 "}}}
 
 "{{{ JSX
@@ -173,7 +161,7 @@ nmap <leader>bq :bp <BAR> bd #<cr>
 
 "{{{ Syntastic
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
@@ -228,6 +216,14 @@ endfunc
 
 " This is totally awesome - remap jj to escape in insert mode.  You'll never type jj anyway, so it's great!
 inoremap jj <Esc>
+
+" To open a new empty buffer
+" This replaces :tabnew which I used to bind to this mapping
+nmap <leader>T :enew<cr>
+
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nmap <leader>bq :bp <BAR> bd #<CR>
 
 " New Tab - Control t
 nnoremap <silent> <C-t> :tabnew<CR>

@@ -1,5 +1,3 @@
-export CLICOLOR=1
-
 SSH_ENV="$HOME/.ssh/environment"
 
 function start_agent {
@@ -97,3 +95,22 @@ alias gwu='gulp watch:ui'
 alias gwc='gulp watch:ui:coffee'
 alias gws='gulp watch:ui:stylus'
 
+# try to figure out DISPLAY cleverly
+DISPLAY=""
+# if we're NOT ssh'd in
+if [ ! ${SSH_TTY} ]; then
+  for x in 0 1 2 3 4 5 6 7 8 9
+  do
+    if [ -O /tmp/.X$x-lock ]
+        then
+        DISPLAY=:$x.0
+        break
+    fi
+  done
+  if [ -z "$DISPLAY" ]
+      then
+      echo "$USER has no X11 DISPLAY open" 1>&2
+      exit 1
+  fi
+  export DISPLAY
+fi
