@@ -1,8 +1,8 @@
-ln -s ~/.config/vimrc ~/.vimrc -f
-ln -s ~/.config/git-config ~/.gitconfig -f
-ln -s ~/.config/git-ignore ~/.gitignore -f
-ln -s ~/.config/bash-profile ~/.bash_profile -f
+ln -sf ~/.config/vimrc ~/.vimrc
+ln -sf ~/.config/git-config ~/.gitconfig
+ln -sf ~/.config/git-ignore ~/.gitignore
+ln -sf ~/.config/bash-profile ~/.bash_profile
 source ~/.bash_profile
-ln -s ~/.config/vim ~/.vim -f
-ln -s ~/.config/tmux-conf ~/.tmux.conf -f
-ln -s ~/.config/ssh-config ~/.ssh/config -f
+ln -sf ~/.config/vim ~/.vim
+ln -sf ~/.config/tmux-conf ~/.tmux.conf
+ln -sf ~/.config/ssh-config ~/.ssh/config
