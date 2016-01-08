@@ -110,7 +110,6 @@ if [ ! ${SSH_TTY} ]; then
   if [ -z "$DISPLAY" ]
       then
       echo "$USER has no X11 DISPLAY open" 1>&2
-      exit 1
   fi
   export DISPLAY
 fi
