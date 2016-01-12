@@ -1,8 +1,12 @@
-ln -s ~/.config/vimrc ~/.vimrc -f
-ln -s ~/.config/git-config ~/.gitconfig -f
-ln -s ~/.config/git-ignore ~/.gitignore -f
-ln -s ~/.config/bash-profile ~/.bash_profile -f
+ln -sfv ~/.config/vimrc ~/.vimrc
+ln -sfv ~/.config/git-config ~/.gitconfig
+ln -sfv ~/.config/git-ignore ~/.gitignore
+ln -sfv ~/.config/bash-profile ~/.bash_profile
+# if ~/.vim already exists then delete it
+if [ -d ~/.vim ]; then
+  rm -rf ~/.vim
+fi
+ln -sfv ~/.config/vim ~/.vim
+ln -sfv ~/.config/tmux-conf ~/.tmux.conf
+ln -sfv ~/.config/ssh-config ~/.ssh/config
 source ~/.bash_profile
-ln -s ~/.config/vim ~/.vim -f
-ln -s ~/.config/tmux-conf ~/.tmux.conf -f
-ln -s ~/.config/ssh-config ~/.ssh/config -f
