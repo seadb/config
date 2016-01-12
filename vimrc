@@ -123,6 +123,9 @@ map <C-n> :NERDTreeToggle<CR>
 "{{{ CtrlP
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|public/\|build/'
 
+" show hidden files
+let g:ctrlp_show_hidden = 1
+
 " Use the nearest .git directory as the cwd
 let g:ctrlp_working_path_mode = 'r'
 
