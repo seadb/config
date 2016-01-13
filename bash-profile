@@ -114,5 +114,4 @@ alias gwu='gulp watch:ui'
 alias gwc='gulp watch:ui:coffee'
 alias gws='gulp watch:ui:stylus'
 alias conflicts='grep -H -r "<<<<<<< HEAD"'
-
-
+alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
