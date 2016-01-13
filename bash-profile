@@ -82,19 +82,6 @@ export LS_COLORS
 # prompt
 PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[0;33m\]\W\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[0;37m\]'
 
-# alias
-
-alias buildf='docker-compose --x-networking -f ~/everything/skills-map/docker-compose-dev.yml up -d --force-recreate'
-alias build='docker-compose --x-networking -f ~/everything/skills-map/docker-compose-dev.yml up -d'
-alias dc='docker-compose --x-networking -f ~/everything/skills-map/docker-compose-dev.yml'
-alias gb='gulp build'
-alias gbu='gulp build:ui'
-alias gbc='gulp build:ui:coffee'
-alias gbs='gulp build:ui:stylus'
-alias gwu='gulp watch:ui'
-alias gwc='gulp watch:ui:coffee'
-alias gws='gulp watch:ui:stylus'
-
 # try to figure out DISPLAY cleverly
 DISPLAY=""
 # if we're NOT ssh'd in
@@ -113,3 +100,19 @@ if [ ! ${SSH_TTY} ]; then
   fi
   export DISPLAY
 fi
+
+# alias
+
+alias build='docker-compose --x-networking up'
+alias buildd='docker-compose --x-networking up -d'
+alias dcx='docker-compose --x-networking'
+alias gb='gulp build'
+alias gbu='gulp build:ui'
+alias gbc='gulp build:ui:coffee'
+alias gbs='gulp build:ui:stylus'
+alias gwu='gulp watch:ui'
+alias gwc='gulp watch:ui:coffee'
+alias gws='gulp watch:ui:stylus'
+alias conflicts='grep -H -r "<<<<<<< HEAD"'
+
+

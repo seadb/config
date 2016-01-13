@@ -40,6 +40,21 @@
   box-shadow: auto;
 }
 
+.background-4 {
+  background-position-x: x-start;
+  background-position-y: x-end;
+  background-position-inline: y-start;
+  background-position-block: y-end;
+  corner-shape: bevel;
+  corners: scoop;
+  border-limit: notch;
+  border-clip: auto;
+  border-clip-top: auto;
+  border-clip-right: auto;
+  border-clip-bottom: auto;
+  border-clip-left: auto;
+}
+
 .box {
   overflow-style: scrollbar;
   overflow-x: panner;
@@ -161,6 +176,15 @@
   display: ethiopic-numeric;
 }
 
+.cssom-view {
+  scroll-behavior: instant;
+  display: smooth;
+}
+
+.cssom {
+  display: auto;
+}
+
 .display {
   box-suppress: flow;
   display: flow-root;
@@ -174,6 +198,13 @@
   wrap-through: maximum;
 }
 
+.filter-effects {
+  flood-color: sRGB;
+  flood-opacity: linearRGB;
+  color-interpolation-filters: auto;
+  lighting-color: auto;
+}
+
 .flexbox {
   flex-direction: flex;
   flex-wrap: inline-flex;
@@ -183,6 +214,10 @@
   flex-grow: wrap;
   flex-shrink: wrap-reverse;
   flex-basis: main-size;
+}
+
+.font-loading-3 {
+  display: auto;
 }
 
 .fonts {
@@ -236,6 +271,10 @@
   display: target-text(attr(href url));
   display: open;
   display: closed;
+}
+
+.geometry-1 {
+  display: auto;
 }
 
 .grid {
@@ -316,6 +355,13 @@
   mask-border-repeat: auto;
   mask-border: auto;
   mask-type: auto;
+}
+
+.motion-1 {
+  motion-path: path(M 100 100 L 300 100 L 200 300 z);
+  motion-offset: auto;
+  motion-rotation: auto;
+  motion: auto;
 }
 
 .multicol {
@@ -450,7 +496,7 @@
 .selectors4:active-drop-target,
 .selectors4:valid-drop-target,
 .selectors4:invalid-drop-target,
-.selectors3:matches(:hover, :focus),
+.selectors4:matches(:hover, :focus),
 .selectors4:dir(ltr),
 .selectors4:local-link(0),
 .selectors4:current(p, li, dt, dd),
@@ -459,6 +505,10 @@
 .selectors4:nth-column(2n+1),
 .selectors4:nth-last-column(-n+2),
 .selectors4:column(p, li, dt, dd) {
+  display: auto;
+}
+
+.selectors-nonelement-1::attr(title) {
   display: auto;
 }
 
@@ -501,6 +551,10 @@
   display: 10st;
   display: moderate;
   display: reduced;
+}
+
+.syntax {
+  display: auto;
 }
 
 .text-3 {
@@ -618,22 +672,31 @@
   var-foo: var(foo);
 }
 
+@viewport {
+  min-zoom: auto;
+  max-zoom: auto;
+  user-zoom: auto;
+}
+
+.web-animations {
+  display: auto;
+}
+
 .will-change {
   will-change: scroll-position;
 }
 
 .writing-modes {
-  text-orientation: before;
-  text-combine-horizontal: after;
-  writing-mode: isolate;
-  display: isolate;
+  writing-mode: before;
+  text-orientation: after;
+  text-combine-upright: mixed;
+  glyph-orientation-vertical: upright;
   display: plaintext;
-  display: mixed;
-  display: upright;
   display: sideways;
-  display: sideways-right;
-  display: sideways-left;
-  display: use-glyph-orientation;
+  display: sideways-rl;
+  display: sideways-lr;
+  display: isolate;
+  display: isolate-override;
   display: horizontal-tb;
   display: vertical-rl;
   display: vertical-lr;
