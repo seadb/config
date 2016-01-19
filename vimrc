@@ -71,6 +71,9 @@ set hidden
 " set paste toggle
 set pastetoggle=<F10>
 
+" use copy paste easily
+set clipboard=unnamed
+
 "}}}
 
 "{{{Aesthetics
