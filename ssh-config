@@ -6,3 +6,5 @@ Host vm
     HostName ec2-54-172-252-110.compute-1.amazonaws.com
     User ubuntu
     IdentityFile ~/.ssh/seelio.pem
+    RemoteForward 2224 127.0.0.1:2224
+    RemoteForward 2225 127.0.0.1:2225
