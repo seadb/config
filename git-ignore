@@ -3,3 +3,14 @@ sublime-text-3
 gtk-2.0
 dconf
 eog
+.DS_Store
+
+# vim
+## swap
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+## session
+Session.vim
+## temporary
+.netrwhist
+*~
