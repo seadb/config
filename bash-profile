@@ -24,12 +24,6 @@ fi
 ### Set architexture flags
 #
 export ARCHFLAGS="-arch x86_64"
-PATH=/opt/local/bin:$PATH
-PATH=/opt/local/bin:$PATH
-
-### Added by the Heroku Toolbelt
-#
-export PATH="/usr/local/heroku/bin:$PATH"
 
 ### git alias
 #
@@ -46,9 +40,6 @@ alias gmt='git mergetool'
 alias bdf='git diff'
 alias glg='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias glg2='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
-
-
-#source ~/bin/git-completion.bash
 
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 export COLOR_NC='\e[0m' # No Color
@@ -103,6 +94,7 @@ fi
 
 # alias
 
+
 alias build='docker-compose --x-networking up'
 alias buildd='docker-compose --x-networking up -d'
 alias dcx='docker-compose --x-networking'
@@ -115,3 +107,14 @@ alias gwc='gulp watch:ui:coffee'
 alias gws='gulp watch:ui:stylus'
 alias conflicts='grep -H -r "<<<<<<< HEAD"'
 alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
+
+
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+
+
+export NVM_DIR="/Users/chelseabridson/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+docker-machine start default
+eval $(docker-machine env default)
