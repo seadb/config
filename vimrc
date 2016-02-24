@@ -124,7 +124,7 @@ map <C-n> :NERDTreeToggle<CR>
 "}}}
 
 "{{{ CtrlP
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|public/\|build/'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|build/'
 
 " show hidden files
 let g:ctrlp_show_hidden = 1
