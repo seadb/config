@@ -41,7 +41,6 @@ alias bdf='git diff'
 alias glg='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias glg2='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 
-export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 export COLOR_NC='\e[0m' # No Color
 export COLOR_WHITE='\e[0;37m'
 export COLOR_BLACK='\e[0;30m'
@@ -60,6 +59,21 @@ export COLOR_YELLOW='\e[0;33m'
 export COLOR_GRAY='\e[0;30m'
 export COLOR_LIGHT_GRAY='\e[0;37m'
 
+# alias
+
+alias dcx='docker-compose --x-networking'
+alias gb='gulp build'
+alias gbu='gulp build:ui'
+alias gbc='gulp build:ui:coffee'
+alias gbs='gulp build:ui:stylus'
+alias gwu='gulp watch:ui'
+alias gwc='gulp watch:ui:coffee'
+alias gws='gulp watch:ui:stylus'
+alias conflicts='grep -H -r "<<<<<<< HEAD"'
+alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
+alias dockerps='docker ps | less -S'
+alias dockerps2="docker ps | sed -e 's/  /\+/g' -e 's/CONTAINER ID/CONTAINER_ID/' | tr -s '+' '\t' | q -t 'select c1,substr(c7, 0, 40),c2,c6 from -' | column -t"
+alias rsweb='docker exec -it seelio_web_1 node build/app.js'
 
 export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
@@ -92,23 +106,6 @@ if [ ! ${SSH_TTY} ]; then
   export DISPLAY
 fi
 
-# alias
-
-
-alias build='docker-compose --x-networking up'
-alias buildd='docker-compose --x-networking up -d'
-alias dcx='docker-compose --x-networking'
-alias gb='gulp build'
-alias gbu='gulp build:ui'
-alias gbc='gulp build:ui:coffee'
-alias gbs='gulp build:ui:stylus'
-alias gwu='gulp watch:ui'
-alias gwc='gulp watch:ui:coffee'
-alias gws='gulp watch:ui:stylus'
-alias conflicts='grep -H -r "<<<<<<< HEAD"'
-alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
-
-
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 
@@ -116,5 +113,23 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export NVM_DIR="/Users/chelseabridson/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-docker-machine start default
-eval $(docker-machine env default)
+#docker-machine start default
+#eval $(docker-machine env default)
+
+alias dip="docker-machine ip default"
+
+if [ "x`docker-machine status default`" == "xRunning" ]; then
+    eval $(docker-machine env default)
+    echo "Configured docker environment. Docker Host IP = `docker-machine ip default`"
+else
+  docker-machine start default
+  eval $(docker-machine env default)
+fi
+
+
+# PATH
+## MacOSX
+PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
+PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin
+export PATH
+
