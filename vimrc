@@ -12,7 +12,7 @@ let mapleader=","
 " Necesary  for lots of cool vim things
 set nocompatible
 
-" only edit file 1 time on save 
+" only write file 1 time on save 
 set nowritebackup
 
 " This shows what you are typing as a command.  I love this!

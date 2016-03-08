@@ -23,57 +23,7 @@ fi
 
 ### Set architexture flags
 #
-export ARCHFLAGS="-arch x86_64"
-
-### git alias
-#
-
-alias gst='git status'
-alias gco='git checkout'
-alias gci='git commit'
-alias grb='git rebase'
-alias gbr='git branch'
-alias gpl='git pull'
-alias gpu='git push'
-alias gad='git add -A'
-alias gmt='git mergetool'
-alias bdf='git diff'
-alias glg='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
-alias glg2='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
-
-export COLOR_NC='\e[0m' # No Color
-export COLOR_WHITE='\e[0;37m'
-export COLOR_BLACK='\e[0;30m'
-export COLOR_BLUE='\e[0;34m'
-export COLOR_LIGHT_BLUE='\e[0;34m'
-export COLOR_GREEN='\e[0;32m'
-export COLOR_LIGHT_GREEN='\e[0;32m'
-export COLOR_CYAN='\e[0;36m'
-export COLOR_LIGHT_CYAN='\e[0;36m'
-export COLOR_RED='\e[0;31m'
-export COLOR_LIGHT_RED='\e[0;31m'
-export COLOR_PURPLE='\e[0;35m'
-export COLOR_LIGHT_PURPLE='\e[0;35m'
-export COLOR_BROWN='\e[0;33m'
-export COLOR_YELLOW='\e[0;33m'
-export COLOR_GRAY='\e[0;30m'
-export COLOR_LIGHT_GRAY='\e[0;37m'
-
-# alias
-
-alias dcx='docker-compose --x-networking'
-alias gb='gulp build'
-alias gbu='gulp build:ui'
-alias gbc='gulp build:ui:coffee'
-alias gbs='gulp build:ui:stylus'
-alias gwu='gulp watch:ui'
-alias gwc='gulp watch:ui:coffee'
-alias gws='gulp watch:ui:stylus'
-alias conflicts='grep -H -r "<<<<<<< HEAD"'
-alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
-alias dockerps='docker ps | less -S'
-alias dockerps2="docker ps | sed -e 's/  /\+/g' -e 's/CONTAINER ID/CONTAINER_ID/' | tr -s '+' '\t' | q -t 'select c1,substr(c7, 0, 40),c2,c6 from -' | column -t"
-alias rsweb='docker exec -it seelio_web_1 node build/app.js'
+#export ARCHFLAGS="-arch x86_64"
 
 export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
@@ -109,14 +59,86 @@ fi
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 
-
 export NVM_DIR="/Users/chelseabridson/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-#docker-machine start default
-#eval $(docker-machine env default)
 
+# PATH
+## MacOSX
+PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
+PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin
+export PATH
+
+
+### TMUX
+# For creating a new session
+tnew_session(){
+  # To avoid 'unset $TMUX to force' error
+  TMUX= tmux new-session -d -s $1
+      tmux switch-client -t $1
+}
+
+alias tnews='tnew_session'
+alias tls='tmux list-session'
+alias tlw='tmux list-window'
+alias tsw='tmux switch -t '
+alias tlc='tmux list-command'
+alias tat='tmux attach -t'
+alias trs='tmux rename-session -t'
+alias tks='tmux kill-session -t'
+
+
+### git alias
+#
+
+alias gst='git status'
+alias gco='git checkout'
+alias gci='git commit'
+alias grb='git rebase'
+alias gbr='git branch'
+alias gpl='git pull'
+alias gpu='git push'
+alias gad='git add -A'
+alias gmt='git mergetool'
+alias bdf='git diff'
+alias glg='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
+alias glg2='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
+
+export COLOR_NC='\e[0m' # No Color
+export COLOR_WHITE='\e[0;37m'
+export COLOR_BLACK='\e[0;30m'
+export COLOR_BLUE='\e[0;34m'
+export COLOR_LIGHT_BLUE='\e[0;34m'
+export COLOR_GREEN='\e[0;32m'
+export COLOR_LIGHT_GREEN='\e[0;32m'
+export COLOR_CYAN='\e[0;36m'
+export COLOR_LIGHT_CYAN='\e[0;36m'
+export COLOR_RED='\e[0;31m'
+export COLOR_LIGHT_RED='\e[0;31m'
+export COLOR_PURPLE='\e[0;35m'
+export COLOR_LIGHT_PURPLE='\e[0;35m'
+export COLOR_BROWN='\e[0;33m'
+export COLOR_YELLOW='\e[0;33m'
+export COLOR_GRAY='\e[0;30m'
+export COLOR_LIGHT_GRAY='\e[0;37m'
+
+### ALIAS
+
+alias dc='docker-compose'
+alias dcx='docker-compose --x-networking'
+alias gb='gulp build'
+alias gbu='gulp build:ui'
+alias gbc='gulp build:ui:coffee'
+alias gbs='gulp build:ui:stylus'
+alias gwu='gulp watch:ui'
+alias gwc='gulp watch:ui:coffee'
+alias gws='gulp watch:ui:stylus'
+alias conflicts='grep -H -r "<<<<<<< HEAD"'
+alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
+alias dockerps='docker ps | less -S'
 alias dip="docker-machine ip default"
+alias dmrs="docker-machine restart default; eval $(docker-machine env default)"
+alias uplogs="docker-compose up -d && docker-compose logs"
 
 if [ "x`docker-machine status default`" == "xRunning" ]; then
     eval $(docker-machine env default)
@@ -125,11 +147,4 @@ else
   docker-machine start default
   eval $(docker-machine env default)
 fi
-
-
-# PATH
-## MacOSX
-PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
-PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin
-export PATH
 
