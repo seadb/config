@@ -1,3 +1,6 @@
+# Set leader key
+set-option -g prefix C-a
+
 # Set a Ctrl-b shortcut for reloading your tmux config
 bind r source-file ~/.tmux.conf
 
@@ -23,3 +26,12 @@ bind -t vi-copy V rectangle-toggle
 
 # Set ] as paste
 bind ] paste-buffer
+
+# Splitting
+unbind %
+unbind '"'
+
+# vertical split with v
+bind C-v split-window -v -c "#{pane_current_path}"
+# horizontal split with h
+bind C-h split-window -h -c "#{pane_current_path}"
