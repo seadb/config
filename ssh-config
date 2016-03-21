@@ -3,6 +3,12 @@ Host github
     User git
     IdentityFile ~/.ssh/github
 
+Host juniperus
+    Hostname 104.131.44.50
+    User sea
+    Port 3689
+    IdentityFile ~/.ssh/juniperus
+
 Host vm
     Hostname ec2-54-172-252-110.compute-1.amazonaws.com
     User ubuntu

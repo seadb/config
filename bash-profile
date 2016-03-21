@@ -38,27 +38,9 @@ function last_two_dirs {
 pwd |rev| awk -F / '{print $1,$2}' | rev | sed s_\ _/_
 }
 # prompt
-PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[0;33m\]$(last_two_dirs)\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[0;37m\]'
+# user name = '\[\e[0;32m\]\u\[\e[m\]'
+PS1='\[\e[0;33m\]$(last_two_dirs)\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[0;37m\]'
 
-
-# try to figure out DISPLAY cleverly
-DISPLAY=""
-# if we're NOT ssh'd in
-if [ ! ${SSH_TTY} ]; then
-  for x in 0 1 2 3 4 5 6 7 8 9
-  do
-    if [ -O /tmp/.X$x-lock ]
-        then
-        DISPLAY=:$x.0
-        break
-    fi
-  done
-  if [ -z "$DISPLAY" ]
-      then
-      echo "$USER has no X11 DISPLAY open" 1>&2
-  fi
-  export DISPLAY
-fi
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
@@ -70,11 +52,6 @@ export NVM_DIR="/Users/chelseabridson/.nvm"
 source ~/.git-completion.bash
 
 # PATH
-## MacOSX
-PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
-PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin
-export PATH
-
 
 ### TMUX
 # For creating a new session
@@ -109,6 +86,7 @@ alias gmt='git mergetool'
 alias bdf='git diff'
 alias glg='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias glg2='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
+alias gca='git commit --amend --no-edit'
 
 export COLOR_NC='\e[0m' # No Color
 export COLOR_WHITE='\e[0;37m'
@@ -143,16 +121,21 @@ alias conflicts='grep -H -r "<<<<<<< HEAD"'
 alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
 alias dockerps='docker ps -a | less -S'
 alias dip="docker-machine ip default"
-alias dmrs="docker-machine restart default; eval $(docker-machine env default)"
+alias dmrs="docker-machine restart default"
+alias dmc="eval $(docker-machine env default)"
 alias uplogs="docker-compose up -d && docker-compose logs"
 
-if [ "x`docker-machine status default`" == "xRunning" ]; then
-    echo "Running eval \$(docker-machine env default)"
-    docker-machine env default && eval $(docker-machine env default)
-    echo "Configured docker environment. Docker Host IP = `docker-machine ip default`"
-else
-  docker-machine start default
-  echo "Running eval \$(docker-machine env default)"
-  docker-machine env default && eval $(docker-machine env default)
-fi
+#if [ "x`docker-machine status default`" == "xRunning" ]; then
+#    echo "Running eval \$(docker-machine env default)"
+#    docker-machine env default && eval $(docker-machine env default)
+#    echo "Configured docker environment. Docker Host IP = `docker-machine ip default`"
+#else
+#  docker-machine start default
+#  echo "Running eval \$(docker-machine env default)"
+#  docker-machine env default && eval $(docker-machine env default)
+#  echo "Configured docker environment. Docker Host IP = `docker-machine ip default`"
+#fi
 
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
