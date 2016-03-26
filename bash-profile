@@ -45,13 +45,10 @@ PS1='\[\e[0;33m\]$(last_two_dirs)\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[0;37m\]'
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 
-export NVM_DIR="/Users/chelseabridson/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # git auto-complete
 source ~/.git-completion.bash
 
-# PATH
 
 ### TMUX
 # For creating a new session
@@ -121,8 +118,9 @@ alias conflicts='grep -H -r "<<<<<<< HEAD"'
 alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
 alias dockerps='docker ps -a | less -S'
 alias dip="docker-machine ip default"
-alias dmrs="docker-machine restart default"
-alias dmc="eval $(docker-machine env default)"
+alias dmrs="docker-machine restart"
+alias dms="docker-machine start"
+alias dme="eval $(docker-machine env default)"
 alias uplogs="docker-compose up -d && docker-compose logs"
 
 #if [ "x`docker-machine status default`" == "xRunning" ]; then
@@ -139,3 +137,9 @@ alias uplogs="docker-compose up -d && docker-compose logs"
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
+
+
+# PATH
+export NVM_DIR="/Users/chelseabridson/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+export PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin
