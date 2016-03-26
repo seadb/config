@@ -63,11 +63,6 @@ export NVM_DIR="/Users/chelseabridson/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 
-# PATH
-## MacOSX
-PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
-PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin
-export PATH
 
 
 ### TMUX
