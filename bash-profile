@@ -23,16 +23,6 @@ fi
 
 ### Set architexture flags
 #
-#export ARCHFLAGS="-arch x86_64"
-
-export TERM=xterm-color
-export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
-export CLICOLOR=1
-
-# color ls
-alias ls='ls'
-LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rpm=90'
-export LS_COLORS
 
 function last_two_dirs {
 pwd |rev| awk -F / '{print $1,$2}' | rev | sed s_\ _/_
@@ -85,23 +75,6 @@ alias glg='git log --date-order --all --graph --format="%C(green)%h%Creset %C(ye
 alias glg2='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias gca='git commit --amend --no-edit'
 
-export COLOR_NC='\e[0m' # No Color
-export COLOR_WHITE='\e[0;37m'
-export COLOR_BLACK='\e[0;30m'
-export COLOR_BLUE='\e[0;34m'
-export COLOR_LIGHT_BLUE='\e[0;34m'
-export COLOR_GREEN='\e[0;32m'
-export COLOR_LIGHT_GREEN='\e[0;32m'
-export COLOR_CYAN='\e[0;36m'
-export COLOR_LIGHT_CYAN='\e[0;36m'
-export COLOR_RED='\e[0;31m'
-export COLOR_LIGHT_RED='\e[0;31m'
-export COLOR_PURPLE='\e[0;35m'
-export COLOR_LIGHT_PURPLE='\e[0;35m'
-export COLOR_BROWN='\e[0;33m'
-export COLOR_YELLOW='\e[0;33m'
-export COLOR_GRAY='\e[0;30m'
-export COLOR_LIGHT_GRAY='\e[0;37m'
 
 ### ALIAS
 
@@ -140,6 +113,37 @@ fi
 
 
 # PATH
+## MacOSX
+PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
+PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin
+
+# ENV VARIABLES
 export NVM_DIR="/Users/chelseabridson/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-export PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin
+#export ARCHFLAGS="-arch x86_64"
+
+export TERM=xterm-color
+export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
+export CLICOLOR=1
+
+# color ls
+LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rpm=90'
+export LS_COLORS
+
+export COLOR_NC='\e[0m' # No Color
+export COLOR_WHITE='\e[0;37m'
+export COLOR_BLACK='\e[0;30m'
+export COLOR_BLUE='\e[0;34m'
+export COLOR_LIGHT_BLUE='\e[0;34m'
+export COLOR_GREEN='\e[0;32m'
+export COLOR_LIGHT_GREEN='\e[0;32m'
+export COLOR_CYAN='\e[0;36m'
+export COLOR_LIGHT_CYAN='\e[0;36m'
+export COLOR_RED='\e[0;31m'
+export COLOR_LIGHT_RED='\e[0;31m'
+export COLOR_PURPLE='\e[0;35m'
+export COLOR_LIGHT_PURPLE='\e[0;35m'
+export COLOR_BROWN='\e[0;33m'
+export COLOR_YELLOW='\e[0;33m'
+export COLOR_GRAY='\e[0;30m'
+export COLOR_LIGHT_GRAY='\e[0;37m'
