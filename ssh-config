@@ -14,6 +14,11 @@ Host vm
     User ubuntu
     IdentityFile ~/.ssh/seelio.pem
 
+Host black
+    Hostname black.cse.msu.edu
+    User bridsonc
+    IdentityFile ~/.ssh/CSEServers_bridsonc
+
 Host sl-us-web1
     Hostname ec2-54-164-133-68.compute-1.amazonaws.com
     User core
@@ -309,16 +314,36 @@ Host sl-stg-ecs
     IdentityFile ~/.ssh/seelio.pem
 
 Host sl-consul-1
-    Hostname ec2-54-84-108-229.compute-1.amazonaws.com
+    Hostname ec2-52-90-152-2.compute-1.amazonaws.com
     User core
     IdentityFile ~/.ssh/seelio.pem
 
 Host sl-consul-2
-    Hostname ec2-54-84-146-103.compute-1.amazonaws.com
+    Hostname ec2-52-90-239-129.compute-1.amazonaws.com
     User core
     IdentityFile ~/.ssh/seelio.pem
 
 Host sl-consul-3
     Hostname ec2-52-91-73-198.compute-1.amazonaws.com
     User core
+    IdentityFile ~/.ssh/seelio.pem
+
+Host sl-skillsmap
+    Hostname ec2-54-152-3-179.compute-1.amazonaws.com
+    User ec2-user
+    IdentityFile ~/.ssh/seelio.pem
+
+Host sl-stg-skills-pg
+    Hostname ec2-54-165-19-208.compute-1.amazonaws.com
+    User core
+    IdentityFile ~/.ssh/seelio.pem
+
+Host emr
+    Hostname ec2-52-91-142-52.compute-1.amazonaws.com
+    User hadoop
+    IdentityFile ~/.ssh/seelio.pem
+
+Host hollywood-v3
+    Hostname ec2-54-236-255-63.compute-1.amazonaws.com
+    User ec2-user
     IdentityFile ~/.ssh/seelio.pem

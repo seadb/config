@@ -24,12 +24,13 @@ fi
 ### Set architexture flags
 #
 
-function last_two_dirs {
-pwd |rev| awk -F / '{print $1,$2}' | rev | sed s_\ _/_
+function last_four_dirs {
+pwd |rev| awk -F / '{print $1,$2,$3,$4}' | rev | sed s_\ _/_
 }
+
 # prompt
 # user name = '\[\e[0;32m\]\u\[\e[m\]'
-PS1='\[\e[0;33m\]$(last_two_dirs)\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[0;37m\]'
+PS1='\[\e[0;33m\]$(last_four_dirs)\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[0;37m\]'
 
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
@@ -74,6 +75,7 @@ alias bdf='git diff'
 alias glg='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias glg2='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias gca='git commit --amend --no-edit'
+alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
 
 
 ### ALIAS
@@ -88,18 +90,32 @@ alias gwu='gulp watch:ui'
 alias gwc='gulp watch:ui:coffee'
 alias gws='gulp watch:ui:stylus'
 alias conflicts='grep -H -r "<<<<<<< HEAD"'
-alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
 alias dockerps='docker ps -a | less -S'
 alias dip="docker-machine ip default"
 alias dmrs="docker-machine restart"
 alias dms="docker-machine start"
-alias dme="eval $(docker-machine env default)"
-alias uplogs="docker-compose up -d && docker-compose logs"
+alias up="docker-compose up -d && docker-compose logs"
+alias bp="source ~/.bash_profile"
 
-#if [ "x`docker-machine status default`" == "xRunning" ]; then
-#    echo "Running eval \$(docker-machine env default)"
-#    docker-machine env default && eval $(docker-machine env default)
-#    echo "Configured docker environment. Docker Host IP = `docker-machine ip default`"
+function clean-images() {
+ docker rmi $(docker images | grep '^<none>' | awk '{print $3}')
+}
+
+# seelio
+alias dme="eval $(docker-machine env default)"
+alias seelio-dev="docker-compose run --rm seelio-dev"
+alias seelio-up="docker-compose -f docker-compose-dev.yml up -d nginx"
+function dockerSeelio () {
+    docker-compose -f docker-compose-dev.yml up -d $1 && docker-compose logs
+
+}
+alias dcseelio='dockerSeelio'
+
+if [ "x`docker-machine status default`" == "xRunning" ]; then
+    echo "Configuring docker environment."
+    docker-machine env default && eval $(docker-machine env default)
+    echo "Configured docker environment. Docker Host IP = `docker-machine ip default`"
+fi
 #else
 #  docker-machine start default
 #  echo "Running eval \$(docker-machine env default)"
@@ -147,3 +163,5 @@ export COLOR_BROWN='\e[0;33m'
 export COLOR_YELLOW='\e[0;33m'
 export COLOR_GRAY='\e[0;30m'
 export COLOR_LIGHT_GRAY='\e[0;37m'
+
+source ~/.bashrc
