@@ -322,3 +322,18 @@ Host sl-consul-3
     Hostname ec2-52-91-73-198.compute-1.amazonaws.com
     User core
     IdentityFile ~/.ssh/seelio.pem
+
+Host seelio-warehouse
+    Hostname ec2-54-165-147-193.compute-1.amazonaws.com
+    User core
+    IdentityFile ~/.ssh/seelio.pem
+
+Host data-access
+    Hostname ec2-52-90-103-23.compute-1.amazonaws.com
+    User ubuntu
+    IdentityFile ~/.ssh/seelio.pem
+
+Host skillsmap
+    Hostname ec2-184-73-31-214.compute-1.amazonaws.com
+    User core
+    IdentityFile ~/.ssh/seelio.pem
