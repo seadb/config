@@ -25,7 +25,6 @@ fi
 #
 #export ARCHFLAGS="-arch x86_64"
 
-export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
 export CLICOLOR=1
 
@@ -120,22 +119,6 @@ alias gws='gulp watch:ui:stylus'
 alias conflicts='grep -H -r "<<<<<<< HEAD"'
 alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
 alias dockerps='docker ps -a | less -S'
-alias dip="docker-machine ip default"
-alias dmrs="docker-machine restart default"
-alias dmc="eval $(docker-machine env default)"
-alias uplogs="docker-compose up -d && docker-compose logs"
+alias up="docker-compose up -d && docker-compose logs"
+alias seelio-dev="docker-compose run --rm --service-ports seelio-dev"
 
-#if [ "x`docker-machine status default`" == "xRunning" ]; then
-#    echo "Running eval \$(docker-machine env default)"
-#    docker-machine env default && eval $(docker-machine env default)
-#    echo "Configured docker environment. Docker Host IP = `docker-machine ip default`"
-#else
-#  docker-machine start default
-#  echo "Running eval \$(docker-machine env default)"
-#  docker-machine env default && eval $(docker-machine env default)
-#  echo "Configured docker environment. Docker Host IP = `docker-machine ip default`"
-#fi
-
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
-fi
