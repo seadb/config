@@ -328,12 +328,32 @@ Host seelio-warehouse
     User core
     IdentityFile ~/.ssh/seelio.pem
 
-Host data-access
+Host ecs-ua-1
     Hostname ec2-52-90-103-23.compute-1.amazonaws.com
-    User ubuntu
+    User ec2-user
     IdentityFile ~/.ssh/seelio.pem
 
-Host skillsmap
+Host ecs-ua-2
     Hostname ec2-184-73-31-214.compute-1.amazonaws.com
-    User core
+    User ec2-user
+    IdentityFile ~/.ssh/seelio.pem
+
+Host ecs-ua-3
+    Hostname ec2-52-90-44-193.compute-1.amazonaws.com 
+    User ec2-user
+    IdentityFile ~/.ssh/seelio.pem
+
+Host ecs-prod-1
+    Hostname ec2-54-236-255-63.compute-1.amazonaws.com
+    User ec2-user
+    IdentityFile ~/.ssh/seelio.pem
+
+Host ecs-prod-2
+    Hostname ec2-54-210-32-44.compute-1.amazonaws.com
+    User ec2-user
+    IdentityFile ~/.ssh/seelio.pem
+
+Host ecs-prod-3
+    Hostname ec2-52-90-249-138.compute-1.amazonaws.com
+    User ec2-user
     IdentityFile ~/.ssh/seelio.pem
