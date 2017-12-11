@@ -28,9 +28,13 @@ function last_four_dirs {
 pwd |rev| awk -F / '{print $1,$2,$3,$4}' | rev | sed s_\ _/_
 }
 
+
+function parse_git_branch {
+git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
 # prompt
 # user name = '\[\e[0;32m\]\u\[\e[m\]'
-PS1='\[\e[0;33m\]$(last_four_dirs)\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[0;37m\]'
+PS1='\[\e[0;33m\]$(last_four_dirs)\[\e[m\] $(parse_git_branch)\[\033[00m\]\[\e[1;32m\]\$\[\e[m\] \[\e[0;37m\]'
 
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
