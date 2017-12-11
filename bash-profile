@@ -25,7 +25,6 @@ fi
 #
 #export ARCHFLAGS="-arch x86_64"
 
-export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
 export CLICOLOR=1
 
@@ -34,27 +33,17 @@ alias ls='ls'
 LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rpm=90'
 export LS_COLORS
 
-# prompt
-PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[0;33m\]\W\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[0;37m\]'
+function last_two_dirs {
+pwd |rev| awk -F / '{print $1,$2}' | rev | sed s_\ _/_
+}
 
-# try to figure out DISPLAY cleverly
-DISPLAY=""
-# if we're NOT ssh'd in
-if [ ! ${SSH_TTY} ]; then
-  for x in 0 1 2 3 4 5 6 7 8 9
-  do
-    if [ -O /tmp/.X$x-lock ]
-        then
-        DISPLAY=:$x.0
-        break
-    fi
-  done
-  if [ -z "$DISPLAY" ]
-      then
-      echo "$USER has no X11 DISPLAY open" 1>&2
-  fi
-  export DISPLAY
-fi
+function parse_git_branch {
+git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+# prompt
+# user name = '\[\e[0;32m\]\u\[\e[m\]'
+PS1='\[\e[0;33m\]$(last_four_dirs)\[\e[m\] $(parse_git_branch)\[\033[00m\]\[\e[1;32m\]\$\[\e[m\] \[\e[0;37m\]'
+
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
@@ -62,13 +51,10 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export NVM_DIR="/Users/chelseabridson/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
+# git auto-complete
+source ~/.git-completion.bash
 
 # PATH
-## MacOSX
-PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
-PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin
-export PATH
-
 
 ### TMUX
 # For creating a new session
@@ -103,6 +89,7 @@ alias gmt='git mergetool'
 alias bdf='git diff'
 alias glg='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias glg2='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
+alias gca='git commit --amend --no-edit'
 
 export COLOR_NC='\e[0m' # No Color
 export COLOR_WHITE='\e[0;37m'

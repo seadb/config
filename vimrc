@@ -263,6 +263,11 @@ set completeopt=longest,menuone,preview
 iabbrev </ </<C-X><C-O>
 iabbrev adn and
 
+" navigate split panes using ctrl+{*} instead of ctrl+w ctrl+{*}
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 "}}}
 

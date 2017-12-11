@@ -1,6 +1,7 @@
 ln -sfv ~/config/vimrc ~/.vimrc
 ln -sfv ~/config/git-config ~/.gitconfig
 ln -sfv ~/config/git-ignore ~/.gitignore
+ln -sfv ~/config/git-completion ~/.git-completion.bash
 ln -sfv ~/config/bash-profile ~/.bash_profile
 # if ~/.vim already exists then delete it
 if [ -d ~/.vim ]; then
