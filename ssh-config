@@ -15,6 +15,6 @@ Host black
     IdentityFile ~/.ssh/CSEServers_bridsonc
 
 Host dev
-  Hostname http://n03.devhost.dev.liquidweb.com/ 
-  User cbridson
-  IdentityFile ~/.ssh/dev_env
+    Hostname n03.devhost.dev.liquidweb.com
+    User cbridson
+    IdentityFile ~/.ssh/dev_env
