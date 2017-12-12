@@ -29,12 +29,11 @@ export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
 export CLICOLOR=1
 
 # color ls
-alias ls='ls'
-LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rpm=90'
-export LS_COLORS
+#LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rpm=90'
+#export LS_COLORS
 
-function last_two_dirs {
-pwd |rev| awk -F / '{print $1,$2}' | rev | sed s_\ _/_
+function last_four_dirs {
+pwd |rev| awk -F / '{print $1,$2,$3,$4}' | rev | sed s_\ _/_
 }
 
 function parse_git_branch {
@@ -113,16 +112,11 @@ export COLOR_LIGHT_GRAY='\e[0;37m'
 
 alias dc='docker-compose'
 alias dcx='docker-compose --x-networking'
-alias gb='gulp build'
-alias gbu='gulp build:ui'
-alias gbc='gulp build:ui:coffee'
-alias gbs='gulp build:ui:stylus'
-alias gwu='gulp watch:ui'
-alias gwc='gulp watch:ui:coffee'
-alias gws='gulp watch:ui:stylus'
 alias conflicts='grep -H -r "<<<<<<< HEAD"'
 alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
 alias dockerps='docker ps -a | less -S'
 alias up="docker-compose up -d && docker-compose logs"
-alias seelio-dev="docker-compose run --rm --service-ports seelio-dev"
 
+
+alias hub="java -jar selenium-server-standalone-3.8.1.jar -role hub"
+alias snode="java -jar selenium-server-standalone-3.8.1.jar -role node  -hub http://localhost:4444/grid/register"
