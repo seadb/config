@@ -24,9 +24,6 @@ fi
 ### Set architexture flags
 #
 
-function last_four_dirs {
-pwd |rev| awk -F / '{print $1,$2,$3,$4}' | rev | sed s_\ _/_
-}
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
 export CLICOLOR=1
 
@@ -87,7 +84,6 @@ alias gca='git commit --amend --no-edit'
 alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
 
 
-
 function clean-images() {
  docker rmi $(docker images | grep '^<none>' | awk '{print $3}')
 }
@@ -113,6 +109,7 @@ fi
 ## MacOSX
 PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin
+PATH=$PATH:~/.npm-global/bin
 
 # ENV VARIABLES
 export NVM_DIR="/Users/chelseabridson/.nvm"
