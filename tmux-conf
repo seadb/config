@@ -9,8 +9,8 @@ set -g mouse-utf8 on
 set -g mouse on
 
 # Set $TERM
-set-option -g default-terminal "xterm-256color"
-#set -g default-terminal "screen-256color"
+#set-option -g default-terminal "xterm-256color"
+set -g default-terminal "screen-256color"
 
 # Use vim keybindings
 setw -g mode-keys vi

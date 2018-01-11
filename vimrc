@@ -97,7 +97,7 @@ set number
 
 if !has("gui_running")
     set t_Co=256
-    set term=xterm-256color
+    set term=screen-256color
 endif
 
 set t_Co=256
