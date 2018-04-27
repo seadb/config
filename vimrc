@@ -7,7 +7,7 @@ call pathogen#infect()
 "{{{ Vim Settings
 
 " map leader to ,
-let mapleader=","
+let mapleader=" "
 
 " Necesary  for lots of cool vim things
 set nocompatible
@@ -25,11 +25,11 @@ set foldmethod=marker
 set autoindent
 
 " Spaces are better than a tab character
-set expandtab
+" set expandtab
 
 " Who wants an 8 character tab?  Not me!
 set shiftwidth=2
-set softtabstop=2
+set softtabstop=0 noexpandtab
 set tabstop=2 
 
 " Use english for spellchecking, but don't spellcheck by default
@@ -46,7 +46,7 @@ set wildmenu
 set wildmode=list:longest,full
 
 " Enable mouse support in console
-set mouse=a
+set mouse=r
 
 " Got backspace?
 set backspace=2
@@ -63,7 +63,7 @@ set incsearch
 " Highlight things that we find with the search
 set hlsearch
 
-" When I close a tab, remove the buffer
+" allows buffers to be hidden
 set hidden
 
 " set paste toggle
@@ -72,6 +72,9 @@ set pastetoggle=<F10>
 " use copy paste easily
 set clipboard=unnamed
 
+set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·,eol:↲
+" tab:→\
+set showbreak=↪\ 
 "}}}
 
 "{{{Aesthetics
@@ -90,14 +93,14 @@ filetype plugin indent on
 hi MatchParen cterm=underline ctermbg=green ctermfg=blue
 
 " creates a line at character 80
-set colorcolumn=80
+set colorcolumn=81
 set ruler
 set cursorline
 set number
 
 if !has("gui_running")
     set t_Co=256
-    set term=xterm-256color
+    set term=screen-256color
 endif
 
 set t_Co=256
@@ -115,6 +118,12 @@ set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 
 "{{{ airline
 
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+
 "}}}
 
 "{{{ NerdTree
@@ -122,7 +131,7 @@ map <C-n> :NERDTreeToggle<CR>
 "}}}
 
 "{{{ CtrlP
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|build/'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|build\|.browserify-package-caches'
 
 " show hidden files
 let g:ctrlp_show_hidden = 1
@@ -226,6 +235,12 @@ inoremap jj <Esc>
 " This replaces :tabnew which I used to bind to this mapping
 nmap <leader>T :enew<cr>
 
+" Move to the next buffer
+nmap <leader>l :bnext<CR>
+
+" Move to the previous buffer
+nmap <leader>h :bprevious<CR>
+"
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 nmap <leader>bq :bp <BAR> bd #<CR>
