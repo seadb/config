@@ -75,6 +75,8 @@ alias bdf='git diff'
 alias glg='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias glg2='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias gca='git commit --amend --no-edit'
+
+# this command deletes branches that were merged with a merge commit
 alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
 
 
@@ -101,28 +103,6 @@ function clean-images() {
  docker rmi $(docker images | grep '^<none>' | awk '{print $3}')
 }
 
-# seelio
-alias dme="eval $(docker-machine env default)"
-alias seelio-dev="docker-compose run --rm seelio-dev"
-alias seelio-up="docker-compose -f docker-compose-dev.yml up -d nginx"
-function dockerSeelio () {
-    docker-compose -f docker-compose-dev.yml up -d $1 && docker-compose logs
-
-}
-alias dcseelio='dockerSeelio'
-
-if [ "x`docker-machine status default`" == "xRunning" ]; then
-    echo "Configuring docker environment."
-    docker-machine env default && eval $(docker-machine env default)
-    echo "Configured docker environment. Docker Host IP = `docker-machine ip default`"
-fi
-#else
-#  docker-machine start default
-#  echo "Running eval \$(docker-machine env default)"
-#  docker-machine env default && eval $(docker-machine env default)
-#  echo "Configured docker environment. Docker Host IP = `docker-machine ip default`"
-#fi
-
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
@@ -132,6 +112,7 @@ fi
 ## MacOSX
 PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin
+export PATH=${PATH}:/Users/chelseabridson/Library/Android/sdk/platform-tools:/Users/chelseabridson/Library/Android/sdk/tools
 
 # ENV VARIABLES
 export NVM_DIR="/Users/chelseabridson/.nvm"
@@ -141,6 +122,8 @@ export NVM_DIR="/Users/chelseabridson/.nvm"
 export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
 export CLICOLOR=1
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home
+export ANDROID_HOME=/Users/chelseabridson/Library/Android/sdk
 
 # color ls
 LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rpm=90'
