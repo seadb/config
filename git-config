@@ -1,6 +1,6 @@
 [user]
 	name = Chelsea Bridson
-  email = bridsonc@msu.edu
+  email = chelsea@bridson.me
 [core]
   excludesfile = ~/.gitignore
   editor = vim
@@ -37,7 +37,7 @@
 [difftool]
   prompt = false
 [github]
-  user = bridsonc
+  user = seadb
   token = token
 [gitflow "prefix"]
   feature = feature-

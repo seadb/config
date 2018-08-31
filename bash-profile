@@ -1,6 +1,6 @@
 #!/bin/bash
 # ruby 
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+#if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # .bashrc {{{
   if [ -f ~/.bashrc ]; then
@@ -79,6 +79,8 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
   
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # }}}
 
 # tmux {{{
@@ -136,3 +138,4 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 	alias hub="java -jar selenium-server-standalone-3.8.1.jar -role hub"
 	alias snode="java -jar selenium-server-standalone-3.8.1.jar -role node  -hub http://localhost:4444/grid/register"
 # }}}
+
