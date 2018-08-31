@@ -1,162 +1,136 @@
-SSH_ENV="$HOME/.ssh/environment"
-
-function start_agent {
-echo "Initialising new SSH agent..."
-/usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-echo succeeded
-chmod 600 "${SSH_ENV}"
-. "${SSH_ENV}" > /dev/null
-/usr/bin/ssh-add;
-}
-
-# Source SSH settings, if applicable
-
-if [ -f "${SSH_ENV}" ]; then
-  . "${SSH_ENV}" > /dev/null
-  #ps ${SSH_AGENT_PID} doesn't work under cywgin
-  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-  start_agent;
-}
-else
-  start_agent;
-fi
-
-### Set architexture flags
-#
-#export ARCHFLAGS="-arch x86_64"
-
-export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
-export CLICOLOR=1
-
-# color ls
-alias ls='ls'
-LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rpm=90'
-export LS_COLORS
-
-function last_two_dirs {
-pwd |rev| awk -F / '{print $1,$2}' | rev | sed s_\ _/_
-}
-
-function parse_git_branch {
-git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
-# prompt
-# user name = '\[\e[0;32m\]\u\[\e[m\]'
-PS1='\[\e[0;33m\]$(last_four_dirs)\[\e[m\] $(parse_git_branch)\[\033[00m\]\[\e[1;32m\]\$\[\e[m\] \[\e[0;37m\]'
-
-
+#!/bin/bash
+# ruby 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
-
-export NVM_DIR="/Users/chelseabridson/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-# git auto-complete
-source ~/.git-completion.bash
-
-
-### TMUX
-# For creating a new session
-tnew_session(){
-  # To avoid 'unset $TMUX to force' error
-  TMUX= tmux new-session -d -s $1
-      tmux switch-client -t $1
-}
-
-alias tnews='tnew_session'
-alias tls='tmux list-session'
-alias tlw='tmux list-window'
-alias tsw='tmux switch -t '
-alias tlc='tmux list-command'
-alias tat='tmux attach -t'
-alias trs='tmux rename-session -t'
-alias tks='tmux kill-session -t'
-
-
-### git alias
-#
-
-alias gst='git status'
-alias gco='git checkout'
-alias gci='git commit'
-alias grb='git rebase'
-alias gbr='git branch'
-alias gpl='git pull'
-alias gpu='git push'
-alias gad='git add -A'
-alias gmt='git mergetool'
-alias bdf='git diff'
-alias glg='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
-alias glg2='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
-alias gca='git commit --amend --no-edit'
-
-export COLOR_NC='\e[0m' # No Color
-export COLOR_WHITE='\e[0;37m'
-export COLOR_BLACK='\e[0;30m'
-export COLOR_BLUE='\e[0;34m'
-export COLOR_LIGHT_BLUE='\e[0;34m'
-export COLOR_GREEN='\e[0;32m'
-export COLOR_LIGHT_GREEN='\e[0;32m'
-export COLOR_CYAN='\e[0;36m'
-export COLOR_LIGHT_CYAN='\e[0;36m'
-export COLOR_RED='\e[0;31m'
-export COLOR_LIGHT_RED='\e[0;31m'
-export COLOR_PURPLE='\e[0;35m'
-export COLOR_LIGHT_PURPLE='\e[0;35m'
-export COLOR_BROWN='\e[0;33m'
-export COLOR_YELLOW='\e[0;33m'
-export COLOR_GRAY='\e[0;30m'
-export COLOR_LIGHT_GRAY='\e[0;37m'
-
-### ALIAS
-
-alias dc='docker-compose'
-alias dcx='docker-compose --x-networking'
-alias gb='gulp build'
-alias gbu='gulp build:ui'
-alias gbc='gulp build:ui:coffee'
-alias gbs='gulp build:ui:stylus'
-alias gwu='gulp watch:ui'
-alias gwc='gulp watch:ui:coffee'
-alias gws='gulp watch:ui:stylus'
-alias conflicts='grep -H -r "<<<<<<< HEAD"'
-alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
-alias dockerps='docker ps | less -S'
-
-export TERM=xterm-color
-export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
-export CLICOLOR=1
-
-# color ls
-alias ls='ls'
-LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rpm=90'
-export LS_COLORS
-
-# prompt
-PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[0;33m\]\W\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[0;37m\]'
-
-# try to figure out DISPLAY cleverly
-DISPLAY=""
-# if we're NOT ssh'd in
-if [ ! ${SSH_TTY} ]; then
-  for x in 0 1 2 3 4 5 6 7 8 9
-  do
-    if [ -O /tmp/.X$x-lock ]
-        then
-        DISPLAY=:$x.0
-        break
-    fi
-  done
-  if [ -z "$DISPLAY" ]
-      then
-      echo "$USER has no X11 DISPLAY open" 1>&2
+# .bashrc {{{
+  if [ -f ~/.bashrc ]; then
+          . ~/.bashrc
   fi
-  export DISPLAY
-fi
+# }}}
 
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+# ssh-agent {{{
+  SSH_ENV="$HOME/.ssh/environment"
+  
+  function start_agent {
+  echo "Initialising new SSH agent..."
+  /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+  echo succeeded
+  chmod 600 "${SSH_ENV}"
+  . "${SSH_ENV}" > /dev/null
+  /usr/bin/ssh-add;
+  }
+  
+  # Source SSH settings, if applicable
+  
+  if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" > /dev/null
+    #ps ${SSH_AGENT_PID} doesn't work under cywgin
+    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+    start_agent;
+  }
+  else
+    start_agent;
+  fi
+# }}}
 
+# prompt {{{
 
-export NVM_DIR="/Users/chelseabridson/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+  # color ls
+  alias ls='ls'
+  LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rpm=90'
+  export LS_COLORS
+  
+  function last_four_dirs {
+  pwd |rev| awk -F / '{print $1,$2,$3,$4}' | rev | sed s_\ _/_
+  }
+  
+  function parse_git_branch {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+  }
+  # prompt
+  # user name = '\[\e[0;32m\]\u\[\e[m\]'
+  PS1='\[\e[0;33m\]$(last_four_dirs)\[\e[m\] $(parse_git_branch)\[\033[00m\]\[\e[1;32m\]\$\[\e[m\] \[\e[0;37m\]'
+# }}}
 
+# env variables {{{
+
+  #export ARCHFLAGS="-arch x86_64"
+  export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
+  export CLICOLOR=1
+  export TERM=xterm-color
+  
+  DISPLAY=""
+  # if we're NOT ssh'd in
+  if [ ! ${SSH_TTY} ]; then
+    for x in 0 1 2 3 4 5 6 7 8 9
+    do
+      if [ -O /tmp/.X$x-lock ]
+          then
+          DISPLAY=:$x.0
+          break
+      fi
+    done
+    if [ -z "$DISPLAY" ]
+        then
+        echo "$USER has no X11 DISPLAY open" 1>&2
+    fi
+    export DISPLAY
+  fi
+  
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+# }}}
+
+# tmux {{{
+  # For creating a new session
+  tnew_session(){
+    # To avoid 'unset $TMUX to force' error
+    TMUX= tmux new-session -d -s $1
+        tmux switch-client -t $1
+  }
+  
+  alias tnews='tnew_session'
+  alias tls='tmux list-session'
+  alias tlw='tmux list-window'
+  alias tsw='tmux switch -t '
+  alias tlc='tmux list-command'
+  alias tat='tmux attach -t'
+  alias trs='tmux rename-session -t'
+  alias tks='tmux kill-session -t'
+# }}}
+
+# git {{{
+  source ~/.git-completion.bash
+  
+  alias gst='git status'
+  alias gco='git checkout'
+  alias gci='git commit'
+  alias grb='git rebase'
+  alias gbr='git branch'
+  alias gpl='git pull'
+  alias gpu='git push'
+  alias gad='git add -A'
+  alias gmt='git mergetool'
+  alias bdf='git diff'
+  alias glg='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
+  alias glg2='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
+  alias gca='git commit --amend --no-edit'
+  
+  # this command deletes branches that were merged with a merge commit
+  alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
+# }}}
+
+# alias {{{
+
+  alias dc='docker-compose'
+  alias dcx='docker-compose --x-networking'
+  alias gb='gulp build'
+  alias gbu='gulp build:ui'
+  alias gbc='gulp build:ui:coffee'
+  alias gbs='gulp build:ui:stylus'
+  alias gwu='gulp watch:ui'
+  alias gwc='gulp watch:ui:coffee'
+  alias gws='gulp watch:ui:stylus'
+  alias conflicts='grep -H -r "<<<<<<< HEAD"'
+  alias dockerps='docker ps | less -S'
+# }}}

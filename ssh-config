@@ -4,8 +4,40 @@ Host github
     IdentityFile ~/.ssh/github
 
 Host juniperus
-    Hostname 104.131.44.50
-    User sea
-    Port 3689
+    Hostname 69.16.196.223
+    User chelsea
     IdentityFile ~/.ssh/juniperus
 
+Host vm
+    Hostname ec2-54-172-252-110.compute-1.amazonaws.com
+    User ubuntu
+    IdentityFile ~/.ssh/seelio.pem
+
+Host black
+    Hostname black.cse.msu.edu
+    User bridsonc
+    IdentityFile ~/.ssh/CSEServers_bridsonc
+
+Host isle-royale
+    Hostname isleroyale.com
+    User isleroyale
+
+Host afs-msu
+    Hostname afs.msu.edu
+    User bridsonc
+
+Host hennasea
+    Hostname 104.236.231.129
+    User sea
+    IdentityFile ~/.ssh/juniperus
+
+Host oyb
+  Hostname outyourbackdoor.com
+  User outyourb
+  IdentityFile ~/.ssh/outyourbackdoor
+
+Host dev
+  Hostname n03.devhost.dev.liquidweb.com
+  User cbridson
+  IdentityFile ~/.ssh/lwdevenv
+  ForwardAgent yes
