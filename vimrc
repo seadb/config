@@ -132,6 +132,7 @@ map <C-n> :NERDTreeToggle<CR>
 
 "{{{ CtrlP
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|build\|.browserify-package-caches'
+" let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|build\|.browserify-package-caches\|browser/www\|ios/www\|android/assets/www\|platforms'
 
 " show hidden files
 let g:ctrlp_show_hidden = 1
