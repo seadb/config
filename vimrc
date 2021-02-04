@@ -7,7 +7,7 @@ call pathogen#infect()
 "{{{ Vim Settings
 
 " map leader to ,
-let mapleader=","
+let mapleader=" "
 
 " Necesary  for lots of cool vim things
 set nocompatible
@@ -24,8 +24,7 @@ set foldmethod=marker
 " Who doesn't like autoindent?
 set autoindent
 
-" Spaces are better than a tab character
-set expandtab
+set noexpandtab
 
 " Who wants an 8 character tab?  Not me!
 set shiftwidth=2
@@ -46,7 +45,7 @@ set wildmenu
 set wildmode=list:longest,full
 
 " Enable mouse support in console
-set mouse=a
+set mouse=r
 
 " Got backspace?
 set backspace=2
@@ -63,7 +62,7 @@ set incsearch
 " Highlight things that we find with the search
 set hlsearch
 
-" When I close a tab, remove the buffer
+" allows buffers to be hidden
 set hidden
 
 " set paste toggle
@@ -90,7 +89,7 @@ filetype plugin indent on
 hi MatchParen cterm=underline ctermbg=green ctermfg=blue
 
 " creates a line at character 80
-set colorcolumn=80
+set colorcolumn=101
 set ruler
 set cursorline
 set number
@@ -115,10 +114,19 @@ set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 
 "{{{ airline
 
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+
 "}}}
 
 "{{{ NerdTree
 map <C-n> :NERDTreeToggle<CR>
+"autocmd vimenter * NERDTree
+let g:NERDTreeNodeDelimiter = "\u2022"
+
 "}}}
 
 "{{{ CtrlP
@@ -226,6 +234,12 @@ inoremap jj <Esc>
 " This replaces :tabnew which I used to bind to this mapping
 nmap <leader>T :enew<cr>
 
+" Move to the next buffer
+nmap <leader>l :bnext<CR>
+
+" Move to the previous buffer
+nmap <leader>h :bprevious<CR>
+"
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 nmap <leader>bq :bp <BAR> bd #<CR>

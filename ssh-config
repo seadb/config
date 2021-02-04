@@ -4,10 +4,10 @@ Host github
     IdentityFile ~/.ssh/github
 
 Host juniperus
-    Hostname 104.131.44.50
-    User sea
-    Port 3689
+    Hostname 69.16.197.116
+    User chelsea
     IdentityFile ~/.ssh/juniperus
+		Port 222
 
 Host black
     Hostname black.cse.msu.edu
@@ -18,6 +18,25 @@ Host dev
   Hostname n03.devhost.dev.liquidweb.com
   User cbridson
   IdentityFile ~/.ssh/dev_env
+  ForwardAgent yes
+
+Host n02.dev 
+  Hostname n02.devhost.dev.liquidweb.com
+  User cbridson
+  IdentityFile ~/.ssh/dev_env
+  ForwardAgent yes
+
+Host selenium-dev
+  Hostname n01.selenium-host.dev.liquidweb.com
+  User lwautotest
+  IdentityFile ~/.ssh/dev_env
+  ForwardAgent yes
+
+Host selenium-int
+  Hostname n01.selenium-host.int.liquidweb.com
+  User root
+  IdentityFile ~/.ssh/dev_env
+  ForwardAgent yes
 
 Host *.int
     User root
@@ -52,3 +71,17 @@ Host *
   ForwardX11 yes
   ForwardX11Trusted yes
   ServerAliveInterval 1800
+  UseKeychain yes
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/dev_env
+  IdentityFile ~/.ssh/github
+
+Host cyathea
+	Hostname 192.168.1.2
+	IdentityFile ~/.ssh/cyathea
+	
+
+Host masre
+	Hostname dev-001.wallaby-dev.lwmasre.com
+	User root
+	IdentityFile ~/.ssh/lwmasre

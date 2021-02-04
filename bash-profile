@@ -1,25 +1,25 @@
 SSH_ENV="$HOME/.ssh/environment"
 
-function start_agent {
-echo "Initialising new SSH agent..."
-/usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-echo succeeded
-chmod 600 "${SSH_ENV}"
-. "${SSH_ENV}" > /dev/null
-/usr/bin/ssh-add;
-}
-
-# Source SSH settings, if applicable
-
-if [ -f "${SSH_ENV}" ]; then
-  . "${SSH_ENV}" > /dev/null
-  #ps ${SSH_AGENT_PID} doesn't work under cywgin
-  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-  start_agent;
-}
-else
-  start_agent;
-fi
+#function start_agent {
+#echo "Initialising new SSH agent..."
+#/usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+#echo succeeded
+#chmod 600 "${SSH_ENV}"
+#. "${SSH_ENV}" > /dev/null
+#/usr/bin/ssh-add;
+#}
+#
+## Source SSH settings, if applicable
+#
+#if [ -f "${SSH_ENV}" ]; then
+#  . "${SSH_ENV}" > /dev/null
+#  #ps ${SSH_AGENT_PID} doesn't work under cywgin
+#  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+#  start_agent;
+#}
+#else
+#  start_agent;
+#fi
 
 ### Set architexture flags
 #
@@ -80,6 +80,7 @@ alias gmt='git mergetool'
 alias bdf='git diff'
 alias glg='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias glg2='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
+alias gitgraph=' git log --graph --decorate --oneline'
 alias gca='git commit --amend --no-edit'
 alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
 
@@ -110,6 +111,8 @@ function clean-images() {
 PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin
 PATH=$PATH:~/.npm-global/bin
+PATH=$PATH:/usr/local/bin
+export PATH
 
 # ENV VARIABLES
 export NVM_DIR="/Users/chelseabridson/.nvm"
@@ -125,24 +128,6 @@ export CLICOLOR=1
 LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rpm=90'
 export LS_COLORS
 
-export COLOR_NC='\e[0m' # No Color
-export COLOR_WHITE='\e[0;37m'
-export COLOR_BLACK='\e[0;30m'
-export COLOR_BLUE='\e[0;34m'
-export COLOR_LIGHT_BLUE='\e[0;34m'
-export COLOR_GREEN='\e[0;32m'
-export COLOR_LIGHT_GREEN='\e[0;32m'
-export COLOR_CYAN='\e[0;36m'
-export COLOR_LIGHT_CYAN='\e[0;36m'
-export COLOR_RED='\e[0;31m'
-export COLOR_LIGHT_RED='\e[0;31m'
-export COLOR_PURPLE='\e[0;35m'
-export COLOR_LIGHT_PURPLE='\e[0;35m'
-export COLOR_BROWN='\e[0;33m'
-export COLOR_YELLOW='\e[0;33m'
-export COLOR_GRAY='\e[0;30m'
-export COLOR_LIGHT_GRAY='\e[0;37m'
-
 if [ -f ~/.bashrc ]; then
     . ~/.bashrc
 fi
@@ -152,16 +137,28 @@ fi
 alias dc='docker-compose'
 alias dcx='docker-compose --x-networking'
 alias gb='gulp build'
-alias conflicts='grep -H -r "<<<<<<< HEAD"'
+alias conflicts='ag "<<<<<<< HEAD"'
 alias dockerps='docker ps -a | less -S'
 alias dip="docker-machine ip default"
 alias dmrs="docker-machine restart"
 alias dms="docker-machine start"
 alias up="docker-compose up -d && docker-compose logs"
 alias bp="source ~/.bash_profile"
-alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "develop" | grep -v "staging" | xargs -n 1 git branch -d'
+alias gbpurge='git branch --merged | grep -v "\*" | grep -v "master" | grep -v "dev" | grep -v "staging" | xargs -n 1 git branch -d'
 alias dockerps='docker ps -a | less -S'
 alias up="docker-compose up -d && docker-compose logs"
+alias rmswp="find . -type f -name "*.sw[klmnop]" -delete"
 
 alias hub="java -jar selenium-server-standalone-3.8.1.jar -role hub"
 alias snode="java -jar selenium-server-standalone-3.8.1.jar -role node  -hub http://localhost:4444/grid/register"
+
+alias tmux-pushstaging='tmux attach-session -t pushstaging-$$ || tmux new-session -s pushstaging-$$ -t pushstaging-master'
+alias tmux-pushprod='tmux attach-session -t pushprod-$$ || tmux new-session -s pushprod-$$ -t pushprod-master'
+alias kero='go run main.go --config kero.yaml server'
+
+export SAUCE_USERNAME='tbeaudoin'
+export SAUCE_KEY='ac5d33dc-02fa-429f-a983-2bd9d8c39b5e'
+export CUSTOMER_USERNAME='mctesterson'
+export CUSTOMER_PASSWORD='T04st3rZ'
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
